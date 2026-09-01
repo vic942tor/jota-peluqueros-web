@@ -186,15 +186,45 @@ h1, h2, h3 { margin: 0 0 10px; }
     letter-spacing: 0.02em;
     margin-bottom: 18px;
 }
-.hero h1 { margin: 0; }
 .hero-logo {
-    max-width: 420px;
+    max-width: 340px;
     width: 100%;
     height: auto;
     border-radius: 10px;
     box-shadow: var(--shadow);
+    margin-bottom: 24px;
+}
+.hero h1 {
+    font-size: 2.5rem;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    max-width: 640px;
+    margin-inline: auto;
 }
 .hero p { font-size: 1.15rem; color: rgba(255,255,255,0.85); margin-bottom: 30px; }
+
+/* Franja de valores */
+.value-strip {
+    background: var(--color-brand-dark);
+    border-bottom: 1px solid var(--color-border);
+}
+.value-strip-inner {
+    padding: 28px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px 48px;
+}
+.value-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-muted);
+    font-weight: 600;
+    font-size: 0.92rem;
+    white-space: nowrap;
+}
+.value-item svg { color: var(--color-brand-accent); flex-shrink: 0; }
 
 /* Conócenos */
 .about-grid {
@@ -225,6 +255,16 @@ h1, h2, h3 { margin: 0 0 10px; }
 }
 .section-inner { max-width: 1100px; margin: 0 auto; }
 .section h2 { font-size: 2rem; text-align: center; }
+.section-eyebrow {
+    display: block;
+    text-align: center;
+    color: var(--color-brand-accent);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
 .section-lead {
     text-align: center;
     color: var(--color-muted);
@@ -238,22 +278,35 @@ h1, h2, h3 { margin: 0 0 10px; }
 }
 
 /* Servicios */
+.service-category { margin-bottom: 36px; }
+.service-category:last-child { margin-bottom: 0; }
+.service-category-title {
+    font-size: 1.1rem;
+    color: var(--color-brand-accent);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 10px;
+    margin-bottom: 18px;
+}
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
 }
 .service-card {
     background: var(--color-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    padding: 24px;
+    padding: 20px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 16px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
 }
-.service-card h3 { font-size: 1.05rem; margin: 0; }
-.service-card .price { font-weight: 700; color: var(--color-accent); }
+.service-card:hover { border-color: var(--color-brand-accent); transform: translateY(-2px); }
+.service-card-info h4 { font-size: 1.05rem; margin: 0 0 4px; }
+.service-card-info p { color: var(--color-muted); font-size: 0.88rem; margin: 0; }
+.service-card .price { font-weight: 700; color: var(--color-accent); white-space: nowrap; }
 
 /* Galería / Carrusel */
 .carousel {
@@ -351,8 +404,7 @@ h1, h2, h3 { margin: 0 0 10px; }
 
 /* Footer */
 .site-footer {
-    text-align: center;
-    padding: 30px 20px;
+    padding: 50px 20px 24px;
     color: rgba(255,255,255,0.6);
     font-size: 0.9rem;
     background:
@@ -360,6 +412,30 @@ h1, h2, h3 { margin: 0 0 10px; }
         var(--color-brand-dark);
     border-top: 1px solid var(--color-border);
 }
+.footer-inner {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 24px;
+}
+.footer-brand { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.footer-logo { height: 44px; width: auto; border-radius: 6px; }
+.footer-brand p { margin: 0; color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+.footer-nav, .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.footer-nav a, .footer-contact a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.92rem;
+}
+.footer-nav a:hover, .footer-contact a:hover { color: var(--color-brand-accent); }
+.footer-contact .location-link { display: inline; }
+.footer-bottom { text-align: center; margin: 0; font-size: 0.82rem; }
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -384,5 +460,11 @@ h1, h2, h3 { margin: 0 0 10px; }
     .about-grid { grid-template-columns: 1fr; }
     .about-text h2 { text-align: center; }
     .hero { padding: 90px 20px; }
-    .hero h1 { font-size: 2rem; }
+    .hero h1 { font-size: 1.7rem; }
+    .hero-logo { max-width: 260px; }
+    .value-strip-inner { gap: 20px 28px; padding: 22px 20px; }
+    .value-item { font-size: 0.85rem; }
+    .footer-inner { grid-template-columns: 1fr; gap: 28px; text-align: center; }
+    .footer-brand { align-items: center; }
+    .footer-nav, .footer-contact { align-items: center; }
 }

@@ -342,7 +342,8 @@ h1, h2, h3 { margin: 0 0 10px; }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .nav-toggle { display: flex; }
+    .logo-img { height: 46px; }
+    .nav-toggle { display: flex; margin-left: auto; }
     .site-nav {
         position: absolute;
         top: 100%;

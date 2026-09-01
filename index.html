@@ -5,16 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jota Peluqueros</title>
     <style>
-        body { font-family: sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f4;}
-        .hero { margin-bottom: 30px; }
-        /* Ajustes para que el calendario se vea bien proporcionado */
-        #reserva { max-width: 1000px; margin: 0 auto; min-height: 600px; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            margin: 0;
+            padding: 40px 20px;
+            background-color: #f3f4f6; /* Fondo gris muy suave */
+            color: #1f2937;
+        }
+        .hero { margin-bottom: 40px; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        p { font-size: 1.1rem; color: #4b5563; }
+        
+        /* Contenedor tipo tarjeta para integrar el calendario */
+        #reserva { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 20px;
+            min-height: 550px;
+        }
     </style>
 </head>
 <body>
     <div class="hero">
         <h1>Jota Peluqueros</h1>
-        <p>Tu estilo, sin complicaciones.</p>
+        <p>Tu estilo, sin complicaciones. Reserva tu cita online.</p>
     </div>
     
     <div id="reserva">
@@ -32,7 +50,12 @@
             calLink: "vic942tor/corte-de-pelo",
           });
 
-          Cal.ns["corte-de-pelo"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+          /* tema claro y ocultamos el panel lateral de detalles */
+          Cal.ns["corte-de-pelo"]("ui", {
+              "hideEventTypeDetails": true,
+              "layout": "month_view",
+              "theme": "light"
+          });
           </script>
           <!-- Cal inline embed code ends -->
     </div>

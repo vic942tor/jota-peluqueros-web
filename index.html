@@ -3,21 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jota Peluqueros — San Felipe, Tenerife</title>
-    <meta name="description" content="Jota Peluqueros, peluquería en San Felipe, Icod de los Vinos. Reserva tu cita online.">
+    <title>Jota Peluqueros | Peluquería en San Felipe, Icod de los Vinos</title>
+    <meta name="description" content="Jota Peluqueros, peluquería en San Felipe, Icod de los Vinos (Tenerife). Corte, barba, tinte y más. Reserva tu cita online en segundos.">
+    <meta name="theme-color" content="#101114">
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="img/favicon-180.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <meta property="og:type" content="business.business">
+    <meta property="og:title" content="Jota Peluqueros | San Felipe, Icod de los Vinos">
+    <meta property="og:description" content="Peluquería en San Felipe, Icod de los Vinos (Tenerife). Corte, barba, tinte y más. Reserva tu cita online en segundos.">
+    <meta property="og:image" content="img/logo.png">
+    <meta property="og:locale" content="es_ES">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Jota Peluqueros | San Felipe, Icod de los Vinos">
+    <meta name="twitter:description" content="Peluquería en San Felipe, Icod de los Vinos (Tenerife). Reserva tu cita online en segundos.">
+    <meta name="twitter:image" content="img/logo.png">
+
     <link rel="stylesheet" href="css/style.css">
     <script src="js/main.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HairSalon",
+        "name": "Jota Peluqueros",
+        "image": "img/logo.png",
+        "telephone": "+34922814736",
+        "priceRange": "€€",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "P.º de la Centinela, 31",
+            "postalCode": "38430",
+            "addressLocality": "San Felipe, Icod de los Vinos",
+            "addressRegion": "Santa Cruz de Tenerife",
+            "addressCountry": "ES"
+        },
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "09:00",
+                "closes": "13:00"
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "15:30",
+                "closes": "19:30"
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Saturday",
+                "opens": "09:00",
+                "closes": "13:00"
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
+    <a href="#inicio" class="skip-link">Saltar al contenido principal</a>
 
     <header class="site-header">
         <div class="header-inner">
-            <a href="#inicio" class="logo"><img src="img/logo.png" alt="Jota Peluqueros" class="logo-img"></a>
-            <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+            <a href="#inicio" class="logo"><img src="img/logo.png" alt="Jota Peluqueros" class="logo-img" width="871" height="334"></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="siteNav">
                 <span></span><span></span><span></span>
             </button>
             <nav class="site-nav" id="siteNav">
@@ -55,7 +106,7 @@
             </div>
             <div class="hero-content">
                 <span class="hero-tag">Renovación en marcha</span>
-                <h1><img src="img/logo.png" alt="Jota Peluqueros" class="hero-logo"></h1>
+                <h1><img src="img/logo.png" alt="Jota Peluqueros" class="hero-logo" width="871" height="334"></h1>
                 <p>Tu estilo, sin complicaciones. San Felipe, Icod de los Vinos.</p>
             </div>
         </section>

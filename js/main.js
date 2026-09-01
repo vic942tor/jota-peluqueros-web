@@ -43,11 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
         prevBtn.addEventListener('click', () => goTo(current - 1));
         nextBtn.addEventListener('click', () => goTo(current + 1));
 
-        let autoplay = setInterval(() => goTo(current + 1), 5000);
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const carousel = document.getElementById('carousel');
-        carousel.addEventListener('mouseenter', () => clearInterval(autoplay));
-        carousel.addEventListener('mouseleave', () => {
-            autoplay = setInterval(() => goTo(current + 1), 5000);
-        });
+
+        if (!prefersReducedMotion) {
+            let autoplay = setInterval(() => goTo(current + 1), 5000);
+            const stop = () => clearInterval(autoplay);
+            const start = () => { autoplay = setInterval(() => goTo(current + 1), 5000); };
+            carousel.addEventListener('mouseenter', stop);
+            carousel.addEventListener('mouseleave', start);
+            carousel.addEventListener('focusin', stop);
+            carousel.addEventListener('focusout', start);
+        }
     }
 });

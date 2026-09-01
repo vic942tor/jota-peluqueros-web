@@ -16,6 +16,11 @@
 
 * { box-sizing: border-box; }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background:
@@ -43,7 +48,8 @@ h1, h2, h3 { margin: 0 0 10px; }
     padding: 8px 24px 8px 16px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 40px;
 }
 .logo {
     font-weight: 700;
@@ -63,6 +69,7 @@ h1, h2, h3 { margin: 0 0 10px; }
     display: flex;
     align-items: center;
     gap: 24px;
+    flex: 1;
 }
 .site-nav a {
     text-decoration: none;
@@ -74,13 +81,15 @@ h1, h2, h3 { margin: 0 0 10px; }
 .nav-cta {
     background: var(--color-accent);
     color: #fff !important;
-    padding: 8px 16px;
-    border-radius: 8px;
+    padding: 10px 22px;
+    border-radius: 999px;
     border: none;
     font: inherit;
-    font-weight: 500;
-    font-size: 0.95rem;
+    font-weight: 600;
+    font-size: 0.9rem;
     cursor: pointer;
+    margin-left: auto;
+    flex-shrink: 0;
 }
 .nav-cta:hover { background: var(--color-accent-hover); }
 
@@ -348,7 +357,7 @@ h1, h2, h3 { margin: 0 0 10px; }
         display: none;
     }
     .site-nav.open { display: flex; }
-    .nav-cta { width: 100%; text-align: center; }
+    .nav-cta { width: 100%; text-align: center; margin-left: 0; }
     .location-grid { grid-template-columns: 1fr; }
     .about-grid { grid-template-columns: 1fr; }
     .about-text h2 { text-align: center; }

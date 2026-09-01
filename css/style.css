@@ -1,17 +1,17 @@
 :root {
-    --color-bg: #f4f4f5;
-    --color-bg-alt: #ffffff;
-    --color-card: #ffffff;
-    --color-text: #18181b;
-    --color-muted: #52525b;
-    --color-border: #e4e4e7;
-    --color-accent: #18181b;
+    --color-bg: #17181c;
+    --color-bg-alt: #1e2027;
+    --color-card: #24262d;
+    --color-text: #f4f4f5;
+    --color-muted: #a1a1aa;
+    --color-border: #34363d;
+    --color-accent: #b91c1c;
+    --color-accent-hover: #991b1b;
     --color-brand-accent: #d4a373;
     --color-brand-red: #991b1b;
-    --color-brand-orange: #c2410c;
-    --color-brand-dark: #1c1f26;
+    --color-brand-dark: #101114;
     --radius: 12px;
-    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    --shadow: 0 4px 10px -2px rgba(0,0,0,0.5), 0 2px 6px -2px rgba(0,0,0,0.4);
 }
 
 * { box-sizing: border-box; }
@@ -19,9 +19,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background:
-        radial-gradient(ellipse 1000px 600px at 100% 0%, rgba(153,27,27,0.18), transparent 65%),
-        radial-gradient(ellipse 1000px 600px at 0% 100%, rgba(194,65,12,0.16), transparent 65%),
-        radial-gradient(ellipse 800px 500px at 50% 50%, rgba(24,24,27,0.05), transparent 70%),
+        radial-gradient(ellipse 1000px 600px at 100% 0%, rgba(153,27,27,0.22), transparent 65%),
+        radial-gradient(ellipse 1000px 600px at 0% 100%, rgba(153,27,27,0.14), transparent 65%),
         var(--color-bg);
     margin: 0;
     color: var(--color-text);
@@ -37,11 +36,11 @@ h1, h2, h3 { margin: 0 0 10px; }
     position: sticky;
     top: 0;
     z-index: 100;
-    background: var(--color-bg-alt);
+    background: var(--color-brand-dark);
     border-bottom: 1px solid var(--color-border);
 }
 .header-inner {
-    padding: 8px 24px 8px 0;
+    padding: 8px 24px 8px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -57,7 +56,7 @@ h1, h2, h3 { margin: 0 0 10px; }
 .logo-img {
     height: 78px;
     width: auto;
-    border-radius: 0 6px 6px 0;
+    border-radius: 10px;
     display: block;
 }
 .site-nav {
@@ -77,8 +76,13 @@ h1, h2, h3 { margin: 0 0 10px; }
     color: #fff !important;
     padding: 8px 16px;
     border-radius: 8px;
+    border: none;
+    font: inherit;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
 }
-.nav-cta:hover { background: #27272a; }
+.nav-cta:hover { background: var(--color-accent-hover); }
 
 .nav-toggle {
     display: none;
@@ -126,8 +130,7 @@ h1, h2, h3 { margin: 0 0 10px; }
     inset: 0;
     background:
         radial-gradient(ellipse at 50% 45%, rgba(255,255,255,0.12), transparent 45%),
-        radial-gradient(ellipse at 30% 100%, rgba(194,65,12,0.4), transparent 55%),
-        radial-gradient(ellipse at 70% 100%, rgba(153,27,27,0.45), transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(153,27,27,0.5), transparent 60%),
         linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.7));
 }
 .hero-banner-img span {
@@ -178,34 +181,16 @@ h1, h2, h3 { margin: 0 0 10px; }
 .section-inner .about-text h2 { text-align: left; font-size: 2rem; }
 .about-text p { color: var(--color-muted); }
 
-.btn {
-    display: inline-block;
-    padding: 14px 28px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    font-size: 1rem;
-}
-.btn-primary {
-    background: var(--color-accent);
-    color: #fff;
-}
-.btn-primary:hover { background: #27272a; }
-
 /* Sections */
 .section { padding: 70px 20px; }
 .section-alt {
     background:
-        linear-gradient(180deg, rgba(153,27,27,0.1), transparent 45%),
-        linear-gradient(0deg, rgba(194,65,12,0.12), transparent 55%),
+        linear-gradient(180deg, rgba(153,27,27,0.12), transparent 45%),
         var(--color-bg-alt);
 }
 .section:not(.section-alt) {
     background:
-        radial-gradient(ellipse 700px 400px at 100% 0%, rgba(153,27,27,0.07), transparent 60%),
-        radial-gradient(ellipse 700px 400px at 0% 100%, rgba(194,65,12,0.06), transparent 60%),
+        radial-gradient(ellipse 700px 400px at 100% 0%, rgba(153,27,27,0.1), transparent 60%),
         var(--color-bg);
 }
 .section-inner { max-width: 1100px; margin: 0 auto; }
@@ -240,25 +225,6 @@ h1, h2, h3 { margin: 0 0 10px; }
 .service-card h3 { font-size: 1.05rem; margin: 0; }
 .service-card .price { font-weight: 700; color: var(--color-accent); }
 
-/* Reserva / Cal.com */
-.booking-card {
-    background: var(--color-card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 50px 30px;
-    max-width: 520px;
-    margin: 0 auto;
-    text-align: center;
-}
-.booking-note {
-    color: var(--color-muted);
-    margin: 0 0 24px;
-}
-.btn-lg {
-    padding: 16px 36px;
-    font-size: 1.05rem;
-}
-
 /* Galería / Carrusel */
 .carousel {
     position: relative;
@@ -267,6 +233,7 @@ h1, h2, h3 { margin: 0 0 10px; }
     border-radius: var(--radius);
     overflow: hidden;
     box-shadow: var(--shadow);
+    border: 1px solid var(--color-border);
 }
 .carousel-track {
     display: flex;
@@ -341,6 +308,7 @@ h1, h2, h3 { margin: 0 0 10px; }
     border-radius: var(--radius);
     overflow: hidden;
     box-shadow: var(--shadow);
+    border: 1px solid var(--color-border);
     min-height: 300px;
 }
 .location-map iframe {
@@ -358,9 +326,9 @@ h1, h2, h3 { margin: 0 0 10px; }
     color: rgba(255,255,255,0.6);
     font-size: 0.9rem;
     background:
-        radial-gradient(ellipse 700px 200px at 30% 100%, rgba(194,65,12,0.3), transparent 65%),
-        radial-gradient(ellipse 700px 200px at 70% 100%, rgba(153,27,27,0.35), transparent 70%),
+        radial-gradient(ellipse 700px 200px at 50% 100%, rgba(153,27,27,0.4), transparent 70%),
         var(--color-brand-dark);
+    border-top: 1px solid var(--color-border);
 }
 
 /* Responsive */

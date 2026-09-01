@@ -20,13 +20,30 @@
             <nav class="site-nav" id="siteNav">
                 <a href="#conocenos">Conócenos</a>
                 <a href="#servicios">Servicios</a>
-                <a href="#reserva">Reserva</a>
                 <a href="#galeria">Galería</a>
                 <a href="#ubicacion">Ubicación</a>
-                <a href="#reserva" class="nav-cta">Pide tu cita</a>
+                <button
+                    type="button"
+                    class="nav-cta"
+                    data-cal-namespace="corte-de-pelo"
+                    data-cal-link="vic942tor/corte-de-pelo"
+                    data-cal-config='{"layout":"month_view","theme":"light"}'>
+                    Pide tu cita
+                </button>
             </nav>
         </div>
     </header>
+
+    <script type="text/javascript">
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+      Cal("init", "corte-de-pelo", {origin:"https://app.cal.com"});
+      Cal.ns["corte-de-pelo"]("ui", {
+          "theme": "light",
+          "hideEventTypeDetails": true,
+          "layout": "month_view",
+          "styles": { "branding": { "brandColor": "#18181b" } }
+      });
+    </script>
 
     <main>
         <section id="inicio" class="hero">
@@ -37,7 +54,6 @@
                 <span class="hero-tag">Renovación en marcha</span>
                 <h1><img src="img/logo.png" alt="Jota Peluqueros" class="hero-logo"></h1>
                 <p>Tu estilo, sin complicaciones. San Felipe, Icod de los Vinos.</p>
-                <a href="#reserva" class="btn btn-primary">Pide tu cita</a>
             </div>
         </section>
 
@@ -84,34 +100,6 @@
                         <span class="price">10 €</span>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="reserva" class="section section-alt">
-            <div class="section-inner">
-                <h2>Pide tu cita</h2>
-                <p class="section-lead">Reserva en segundos: elige el servicio, el día y la hora que prefieras.</p>
-                <div class="booking-card">
-                    <p class="booking-note">Se abrirá el calendario en una ventana emergente para elegir día y hora.</p>
-                    <button
-                        type="button"
-                        class="btn btn-primary btn-lg"
-                        data-cal-namespace="corte-de-pelo"
-                        data-cal-link="vic942tor/corte-de-pelo"
-                        data-cal-config='{"layout":"month_view","theme":"light"}'>
-                        Reservar ahora
-                    </button>
-                </div>
-                <script type="text/javascript">
-                  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-                  Cal("init", "corte-de-pelo", {origin:"https://app.cal.com"});
-                  Cal.ns["corte-de-pelo"]("ui", {
-                      "theme": "light",
-                      "hideEventTypeDetails": true,
-                      "layout": "month_view",
-                      "styles": { "branding": { "brandColor": "#18181b" } }
-                  });
-                </script>
             </div>
         </section>
 

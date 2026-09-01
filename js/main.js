@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Cerrar el menú móvil al elegir una sección
-    siteNav.querySelectorAll('a').forEach(link => {
+    siteNav.querySelectorAll('a, button').forEach(link => {
         link.addEventListener('click', () => {
             siteNav.classList.remove('open');
             navToggle.setAttribute('aria-expanded', 'false');

@@ -1,35 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const timeButtons = document.querySelectorAll('.time-btn');
-    const bookingForm = document.getElementById('bookingForm');
-    let selectedTime = null;
+    const navToggle = document.getElementById('navToggle');
+    const siteNav = document.getElementById('siteNav');
 
-    //  Marcar visualmente la hora elegida
-    timeButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            timeButtons.forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            selectedTime = e.target.textContent;
+    navToggle.addEventListener('click', () => {
+        const isOpen = siteNav.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Cerrar el menú móvil al elegir una sección
+    siteNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            siteNav.classList.remove('open');
+            navToggle.setAttribute('aria-expanded', 'false');
         });
     });
 
-    // Capturar el botón de confirmar reserva
-    bookingForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        if (!selectedTime) {
-            alert('Por favor, selecciona una hora para la cita.');
-            return;
+    // Carrusel de la galería
+    const track = document.getElementById('carouselTrack');
+    if (track) {
+        const slides = Array.from(track.children);
+        const dotsContainer = document.getElementById('carouselDots');
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+        let current = 0;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', `Ir a la foto ${i + 1}`);
+            dot.addEventListener('click', () => goTo(i));
+            dotsContainer.appendChild(dot);
+        });
+        const dots = Array.from(dotsContainer.children);
+
+        function goTo(index) {
+            current = (index + slides.length) % slides.length;
+            track.style.transform = `translateX(-${current * 100}%)`;
+            dots.forEach((d, i) => d.classList.toggle('active', i === current));
         }
 
-        // Empaquetamos los datos que enviaremos a la API después
-        const bookingData = {
-            date: document.getElementById('date').value,
-            time: selectedTime,
-            name: document.getElementById('name').value,
-            phone: document.getElementById('phone').value
-        };
+        prevBtn.addEventListener('click', () => goTo(current - 1));
+        nextBtn.addEventListener('click', () => goTo(current + 1));
 
-        console.log('Datos listos para enviar:', bookingData);
-        alert(`Has solicitado cita el ${bookingData.date} a las ${bookingData.time}`);
-    });
+        let autoplay = setInterval(() => goTo(current + 1), 5000);
+        const carousel = document.getElementById('carousel');
+        carousel.addEventListener('mouseenter', () => clearInterval(autoplay));
+        carousel.addEventListener('mouseleave', () => {
+            autoplay = setInterval(() => goTo(current + 1), 5000);
+        });
+    }
 });

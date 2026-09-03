@@ -21,7 +21,7 @@
     <meta name="twitter:image" content="img/logo.png">
 
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/main.js" defer></script>
+    <script src="js/main.js" type="module"></script>
 
     <script type="application/ld+json">
     {
@@ -65,28 +65,7 @@
 <body>
     <a href="#inicio" class="skip-link">Saltar al contenido principal</a>
 
-    <header class="site-header">
-        <div class="header-inner">
-            <a href="#inicio" class="logo"><img src="img/logo.png" alt="Jota Peluqueros" class="logo-img" width="871" height="334"></a>
-            <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="siteNav">
-                <span></span><span></span><span></span>
-            </button>
-            <nav class="site-nav" id="siteNav">
-                <a href="#conocenos">Conócenos</a>
-                <a href="#servicios">Servicios</a>
-                <a href="#galeria">Galería</a>
-                <a href="#ubicacion">Ubicación</a>
-                <button
-                    type="button"
-                    class="nav-cta"
-                    data-cal-namespace="corte-de-pelo"
-                    data-cal-link="jota-peluqueros/corte-de-pelo"
-                    data-cal-config='{"layout":"month_view","theme":"light"}'>
-                    Pide tu cita
-                </button>
-            </nav>
-        </div>
-    </header>
+    <div id="site-header-slot"></div>
 
     <script type="text/javascript">
       (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
@@ -134,7 +113,7 @@
 
         <section id="conocenos" class="section section-alt">
             <div class="section-inner">
-                <div class="about-grid">
+                <div class="about-grid" data-reveal>
                     <div class="about-img placeholder-media" aria-hidden="true"><span>Foto del equipo — próximamente</span></div>
                     <div class="about-text">
                         <h2>Conócenos</h2>
@@ -151,7 +130,7 @@
                 <h2>Cuidamos cada detalle</h2>
                 <p class="section-lead">Precios orientativos — confírmalos y ajústalos en <code>index.html</code> antes de publicar.</p>
 
-                <div class="service-category">
+                <div class="service-category" data-reveal>
                     <h3 class="service-category-title">Cortes</h3>
                     <div class="services-grid">
                         <div class="service-card">
@@ -171,7 +150,7 @@
                     </div>
                 </div>
 
-                <div class="service-category">
+                <div class="service-category" data-reveal>
                     <h3 class="service-category-title">Barba y afeitado</h3>
                     <div class="services-grid">
                         <div class="service-card">
@@ -191,7 +170,7 @@
                     </div>
                 </div>
 
-                <div class="service-category">
+                <div class="service-category" data-reveal>
                     <h3 class="service-category-title">Color y peinado</h3>
                     <div class="services-grid">
                         <div class="service-card">
@@ -217,7 +196,7 @@
             <div class="section-inner">
                 <h2>Galería</h2>
                 <p class="section-lead">Fotos del local y trabajos realizados — pendiente de añadir imágenes reales tras la renovación.</p>
-                <div class="carousel" id="carousel">
+                <div class="carousel" id="carousel" data-reveal>
                     <div class="carousel-track" id="carouselTrack">
                         <div class="carousel-slide placeholder-media"><span>Foto 1 — próximamente</span></div>
                         <div class="carousel-slide placeholder-media"><span>Foto 2 — próximamente</span></div>
@@ -236,7 +215,7 @@
             <div class="section-inner">
                 <h2>Ubicación y contacto</h2>
                 <div class="location-grid">
-                    <div class="location-info">
+                    <div class="location-info" data-reveal>
                         <h3>Dirección</h3>
                         <p>
                             <a class="location-link" href="https://www.google.com/maps/search/?api=1&query=P.%C2%BA%20de%20la%20Centinela%2C%2031%2C%2038430%20San%20Felipe%2C%20Icod%20de%20los%20Vinos" target="_blank" rel="noopener">
@@ -253,7 +232,7 @@
                             Domingo: cerrado
                         </p>
                     </div>
-                    <div class="location-map">
+                    <div class="location-map" data-reveal>
                         <iframe
                             title="Mapa Jota Peluqueros"
                             src="https://www.google.com/maps?q=P.%C2%BA%20de%20la%20Centinela%2C%2031%2C%2038430%20San%20Felipe%2C%20Icod%20de%20los%20Vinos&output=embed"
@@ -266,25 +245,7 @@
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="section-inner footer-inner">
-            <div class="footer-brand">
-                <img src="img/logo.png" alt="Jota Peluqueros" class="footer-logo" width="871" height="334">
-                <p>Tu estilo, sin complicaciones.</p>
-            </div>
-            <nav class="footer-nav" aria-label="Enlaces del pie de página">
-                <a href="#conocenos">Conócenos</a>
-                <a href="#servicios">Servicios</a>
-                <a href="#galeria">Galería</a>
-                <a href="#ubicacion">Ubicación</a>
-            </nav>
-            <div class="footer-contact">
-                <a href="tel:+34922814736">922 81 47 36</a>
-                <a class="location-link" href="https://www.google.com/maps/search/?api=1&query=P.%C2%BA%20de%20la%20Centinela%2C%2031%2C%2038430%20San%20Felipe%2C%20Icod%20de%20los%20Vinos" target="_blank" rel="noopener">P.º de la Centinela, 31, San Felipe</a>
-            </div>
-        </div>
-        <p class="footer-bottom">&copy; 2026 Jota Peluqueros — San Felipe, Icod de los Vinos.</p>
-    </footer>
+    <div id="site-footer-slot"></div>
 
 </body>
 </html>

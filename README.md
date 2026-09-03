@@ -1,6 +1,6 @@
 # Jota Peluqueros — Web
 
-Landing page de una sola página para la peluquería **Jota Peluqueros** (San Felipe, Icod de los Vinos, Tenerife). Sitio estático sin build ni frameworks, con reservas online integradas vía **Cal.com**.
+Web para la peluquería **Jota Peluqueros** (San Felipe, Icod de los Vinos, Tenerife). Sitio estático multipágina sin build ni frameworks, con reservas online integradas vía **Cal.com**. Header y footer son *partials* compartidos entre páginas, y el JS está dividido en módulos ES por responsabilidad.
 
 **Producción:** desplegado en [Vercel](https://vercel.com) desde este repositorio (auto-deploy en cada push a `main`).
 
@@ -27,11 +27,19 @@ No requiere `npm install` ni proceso de compilación. Cualquier servidor estáti
 
 ```
 .
-├── index.html          # Toda la estructura y contenido de la página (una sola página)
+├── index.html            # Página principal (inicio, conócenos, servicios, galería, ubicación)
+├── productos.html        # Página de catálogo de productos
+├── partials/
+│   ├── header.html        # Header + nav, inyectado por JS en cada página
+│   └── footer.html        # Footer, inyectado por JS en cada página
 ├── css/
-│   └── style.css       # Todos los estilos, con custom properties en :root
+│   └── style.css         # Todos los estilos, con custom properties en :root (compartido)
 ├── js/
-│   └── main.js         # Menú móvil, carrusel de galería
+│   ├── main.js            # Punto de entrada: orquesta el resto de módulos
+│   ├── partials.js        # Carga header.html/footer.html vía fetch() en los slots de cada página
+│   ├── nav.js              # Menú móvil + resolución de enlaces de ancla entre páginas
+│   ├── carousel.js         # Carrusel de la galería
+│   └── reveal.js            # Animación de aparición al hacer scroll (IntersectionObserver)
 ├── img/
 │   ├── logo.png         # Logo de marca (871×334px), usado en header, hero y footer
 │   ├── favicon-16.png
@@ -41,7 +49,7 @@ No requiere `npm install` ni proceso de compilación. Cualquier servidor estáti
 └── .gitignore
 ```
 
-No hay carpeta `dist`/`build`: `index.html` es el punto de entrada servido directamente.
+No hay carpeta `dist`/`build`: cada `.html` es un punto de entrada servido directamente. No hay bundler — los módulos JS se cargan como ES modules nativos del navegador (`<script type="module">`), con `import`/`export` normales.
 
 ---
 
@@ -57,7 +65,7 @@ python -m http.server 5173
 npx serve .
 ```
 
-Luego abrir `http://localhost:5173`. **No usar `file://` directamente** — el embed de Cal.com y el `fetch` de recursos pueden fallar por CORS/protocolo al abrir el HTML como archivo local en vez de servirlo por HTTP.
+Luego abrir `http://localhost:5173`. **`file://` no funciona** (ni es opcional): `js/partials.js` usa `fetch()` para cargar `partials/header.html` y `partials/footer.html`, y los navegadores bloquean `fetch` sobre el protocolo `file://` por CORS. Sin servidor HTTP, la página cargará sin header ni footer.
 
 ---
 
@@ -86,16 +94,43 @@ Los fondos usan `radial-gradient`/`linear-gradient` sutiles en rojo sobre el `--
 
 ---
 
-## Secciones de la página (`index.html`)
+## Arquitectura de partials y JS
 
-1. **Header (`.site-header`)** — sticky, logo a la izquierda, nav a la derecha con el CTA `#Pide tu cita` en píldora roja. Menú hamburguesa en móvil (`<768px`).
-2. **Hero (`#inicio`)** — fondo con patrón + degradado rojo, logo, H1 en texto real (no imagen, para SEO), subtítulo.
-3. **Franja de valores (`.value-strip`)** — 4 puntos con iconos SVG inline (reserva online, profesionales, ubicación, atención personalizada).
-4. **Conócenos (`#conocenos`)** — texto de presentación + imagen placeholder del equipo/local.
-5. **Servicios (`#servicios`)** — agrupados por categoría (`.service-category`): Cortes / Barba y afeitado / Color y peinado. Cada tarjeta tiene nombre, descripción corta y precio.
-6. **Galería (`#galeria`)** — carrusel (`.carousel`) con 5 slides placeholder, controlado por JS (`js/main.js`): flechas, puntos de navegación, autoplay cada 5s.
-7. **Ubicación (`#ubicacion`)** — dirección (con enlace directo a Google Maps + icono de pin), teléfono (`tel:`), horario, y `<iframe>` de Google Maps.
-8. **Footer** — logo, nav secundaria, contacto, copyright.
+No hay ningún framework ni SSG (Astro, 11ty, etc.) montando esto — es un patrón vanilla deliberadamente simple:
+
+1. Cada página HTML tiene dos contenedores vacíos: `<div id="site-header-slot"></div>` y `<div id="site-footer-slot"></div>`.
+2. `js/main.js` (cargado con `type="module"` en cada página) importa y ejecuta, en orden:
+   1. `loadPartials()` (`js/partials.js`) — hace `fetch('partials/header.html')` y `fetch('partials/footer.html')` y los inyecta (`innerHTML`) en esos slots. Es `async`/`await`, así que todo lo siguiente espera a que el header/footer ya estén en el DOM.
+   2. `initNav()` (`js/nav.js`) — una vez el header ya existe: resuelve los `href` de los enlaces `[data-anchor]` (ver abajo), engancha el botón de menú móvil, y marca el enlace de la página actual con `aria-current="page"` leyendo `document.body.dataset.page`.
+   3. `initCarousel()` (`js/carousel.js`) — no hace nada si la página no tiene `#carouselTrack` (p. ej. en `productos.html`).
+   4. `initReveal()` (`js/reveal.js`) — activa las animaciones de scroll.
+
+**Por qué un solo header/footer compartido:** con dos páginas (y las que vengan), tener el `<nav>` duplicado en cada archivo es la forma más fácil de que un día se edite un enlace en una página y se te olvide en la otra. Con el partial, se edita una vez en `partials/header.html` y ya vale para todas las páginas.
+
+### Enlaces de ancla entre páginas (`[data-anchor]`)
+El header/footer son el mismo HTML en todas las páginas, pero los enlaces a secciones (`Conócenos`, `Servicios`...) solo existen como anclas dentro de `index.html`. Para que funcionen bien estés donde estés, en el partial no llevan un `href` fijo, sino `data-anchor="servicios"`, y `initNav()` decide el destino real en tiempo de ejecución:
+- Si ya estás en `index.html` (o `/`): `href="#servicios"` (scroll suave en la misma página).
+- Si estás en otra página (`productos.html`): `href="index.html#servicios"` (navega a la home y salta a la sección).
+
+### Animaciones de scroll (`[data-reveal]`)
+Cualquier elemento con el atributo `data-reveal` se anima con un *fade + slide-up* sutil la primera vez que entra en el viewport (`IntersectionObserver`, en `js/reveal.js`). Es *progressive enhancement* a propósito: por defecto (CSS) el contenido está siempre visible; solo si el JS llega a ejecutarse *y* el usuario no tiene activado "reducir movimiento" (`prefers-reduced-motion`), se añade la clase `.reveal-init` que lo oculta hasta que se revela. Si el JS falla o no carga, nunca se rompe la visibilidad del contenido.
+
+---
+
+## Páginas
+
+### `index.html`
+1. **Hero (`#inicio`)** — fondo con patrón + degradado rojo, logo, H1 en texto real (no imagen, para SEO), subtítulo.
+2. **Franja de valores (`.value-strip`)** — 4 puntos con iconos SVG inline (reserva online, profesionales, ubicación, atención personalizada). Sin animación de scroll (va en el primer viewport, debe verse al instante).
+3. **Conócenos (`#conocenos`)** — texto de presentación + imagen placeholder del equipo/local.
+4. **Servicios (`#servicios`)** — agrupados por categoría (`.service-category`): Cortes / Barba y afeitado / Color y peinado. Cada tarjeta tiene nombre, descripción corta y precio.
+5. **Galería (`#galeria`)** — carrusel (`.carousel`) con 5 slides placeholder: flechas, puntos de navegación, autoplay cada 5s.
+6. **Ubicación (`#ubicacion`)** — dirección (con enlace directo a Google Maps + icono de pin), teléfono (`tel:`), horario, y `<iframe>` de Google Maps.
+
+### `productos.html`
+Catálogo de productos, con la misma estética que Servicios: categorías (`.service-category` reutilizada) con tarjetas de producto (`.product-card`) que llevan imagen, nombre, descripción y precio. Ahora mismo todo son placeholders ("Producto próximamente") a la espera del catálogo real — **pendiente de decidir con el dueño si esto acaba siendo solo informativo o con venta online** (ver sección de pendientes).
+
+Header, footer, botón de reserva y estilos son exactamente los mismos que en `index.html` (vía partials + `css/style.css` compartido) — no hay estilos ni componentes duplicados de una página a otra.
 
 ### Contenido placeholder pendiente de datos reales
 Marcado explícitamente en el HTML con texto tipo "— próximamente":
@@ -103,6 +138,7 @@ Marcado explícitamente en el HTML con texto tipo "— próximamente":
 - Foto del equipo en "Conócenos" (`.about-img`)
 - 5 fotos del carrusel de galería
 - Precios de servicios (orientativos, nota visible en el propio `<p class="section-lead">` del apartado Servicios)
+- Todo el catálogo de `productos.html` (nombres, fotos, descripciones y precios)
 
 ---
 
@@ -112,7 +148,7 @@ Marcado explícitamente en el HTML con texto tipo "— próximamente":
 
 - **Cuenta:** `jota-peluqueros` (evento: `corte-de-pelo`) → `cal.com/jota-peluqueros/corte-de-pelo`
 - **Tipo de embed:** *popup modal* (no inline) — se dispara solo desde el botón **"Pide tu cita"** del header (`.nav-cta`), que es el único punto de entrada de reservas de toda la web (decisión de producto: nada de botones duplicados ni redirecciones a una sección "Reserva").
-- **Snippet de carga:** justo después del `<header>` en `index.html` (el loader oficial de Cal.com + `Cal("init", ...)` + configuración de `ui`).
+- **Snippet de carga:** justo después del slot del header (`#site-header-slot`) en **cada página** que tenga el botón "Pide tu cita" — ahora mismo `index.html` y `productos.html` (el loader oficial de Cal.com + `Cal("init", ...)` + configuración de `ui`). Al no haber build ni includes de HTML del lado servidor, este bloque de `<script>` está duplicado literalmente en ambos archivos; el botón en sí viene del partial compartido, pero el script que lo activa no se pudo mover al partial porque necesita estar en el `<body>` de cada página cargándose pronto.
 - **Config del embed** (`Cal.ns["corte-de-pelo"]("ui", {...})`):
   - `theme: "light"` — el propio popup de Cal.com usa tema claro (contrasta a propósito con el resto de la web, que es oscura).
   - `hideEventTypeDetails: false` — se muestra el panel con avatar/nombre del profesional, duración, ubicación y franja horaria dentro del popup.
@@ -128,7 +164,7 @@ Marcado explícitamente en el HTML con texto tipo "— próximamente":
 - **Sin SMS/WhatsApp automático**: requeriría el plan de pago Teams de Cal.com (20$/mes + coste por SMS) — decisión consciente de quedarse en el plan gratuito por ahora.
 
 ### Cambiar de cuenta de Cal.com en el futuro
-Si se migra a la cuenta definitiva del dueño, solo hay que cambiar el valor de `data-cal-link` (y el `Cal("init", "corte-de-pelo", ...)` si cambia el slug del evento) en `index.html`. Es el único sitio donde el usuario/evento de Cal.com está hardcodeado.
+Si se migra a la cuenta definitiva del dueño, hay que cambiar el valor de `data-cal-link` (y el `Cal("init", "corte-de-pelo", ...)` si cambia el slug del evento) en **dos sitios**: `partials/header.html` (el botón, que se comparte) y el bloque `<script>` de Cal.com que va duplicado en `index.html` y `productos.html` (ver arriba).
 
 ---
 
@@ -146,6 +182,7 @@ Si se migra a la cuenta definitiva del dueño, solo hay que cambiar el valor de 
 - Enlace **"Saltar al contenido principal"** (`.skip-link`), visible solo al recibir foco por teclado.
 - `:focus-visible` global con outline visible en color de marca (no depende del estilo por defecto del navegador).
 - El carrusel de galería respeta `prefers-reduced-motion` (no hace autoplay si el usuario lo tiene desactivado) y se pausa también al navegar con teclado (`focusin`/`focusout`), no solo con el ratón.
+- Las animaciones de aparición al hacer scroll (`data-reveal`) tampoco se activan con `prefers-reduced-motion` — el contenido se queda visible sin animar.
 - `aria-label`, `aria-expanded` y `aria-controls` en el botón de menú móvil; `aria-label` en los controles del carrusel.
 - Imágenes con `alt` descriptivo; mapa e imágenes decorativas marcadas con `aria-hidden="true"` donde corresponde.
 
@@ -173,3 +210,6 @@ Un único breakpoint (`max-width: 768px`) cubre el cambio a menú hamburguesa, g
 - [ ] Migrar la cuenta de Cal.com de la de pruebas (`jota-peluqueros`, gestionada por el desarrollador) a una cuenta propiedad del dueño del negocio.
 - [ ] Decidir si en algún momento se activa el plan de pago de Cal.com para recordatorios por SMS.
 - [ ] Enlaces a redes sociales (Instagram/Facebook) — no incluidos en el footer hasta tener las cuentas reales (para no enlazar a nada roto).
+- [ ] **Venta de productos (gominas, etc.)** — la página `productos.html` ya existe como catálogo estático con placeholders, pero falta decidir con el dueño si quiere solo mostrar catálogo/stock (informativo, compra en tienda) o venta online real con cobro y descuento de stock automático. La solución técnica es completamente distinta según la respuesta:
+  - Solo catálogo informativo → seguir editando `productos.html` a mano (como ahora) es suficiente si el catálogo cambia poco; si cambia mucho, una hoja de Google Sheets que el dueño edite él mismo, leída por la web, evitaría depender de tocar código cada vez.
+  - Venta online real → usar una plataforma de e-commerce ya existente (Fresha con productos, Shopify, WooCommerce) en vez de construir un sistema de pagos/inventario a medida.

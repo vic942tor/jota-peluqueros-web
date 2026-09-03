@@ -36,6 +36,18 @@
     outline-offset: 2px;
 }
 
+/* Animación de aparición al hacer scroll. Sin la clase .reveal-init
+   (JS no ha corrido, o el usuario prefiere menos movimiento) todo se ve normal. */
+[data-reveal].reveal-init {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+[data-reveal].reveal-init.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 100px;
@@ -99,6 +111,7 @@ h1, h2, h3 { margin: 0 0 10px; }
     font-size: 0.95rem;
 }
 .site-nav a:hover { color: var(--color-brand-accent); }
+.site-nav a[aria-current="page"], .footer-nav a[aria-current="page"] { color: var(--color-brand-accent); }
 .nav-cta {
     background: var(--color-accent);
     color: #fff !important;
@@ -307,6 +320,38 @@ h1, h2, h3 { margin: 0 0 10px; }
 .service-card-info h4 { font-size: 1.05rem; margin: 0 0 4px; }
 .service-card-info p { color: var(--color-muted); font-size: 0.88rem; margin: 0; }
 .service-card .price { font-weight: 700; color: var(--color-accent); white-space: nowrap; }
+
+/* Página secundaria (ej. Productos) */
+.page-hero {
+    padding: 100px 20px 60px;
+    text-align: center;
+    background:
+        radial-gradient(ellipse 900px 500px at 50% 0%, rgba(153,27,27,0.28), transparent 65%),
+        var(--color-brand-dark);
+    border-bottom: 1px solid var(--color-border);
+}
+.page-hero h1 { font-size: 2.25rem; margin: 0 0 14px; }
+.page-hero p { color: var(--color-muted); max-width: 560px; margin: 0 auto; font-size: 1.05rem; }
+
+/* Productos */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+.product-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.product-card:hover { border-color: var(--color-brand-accent); transform: translateY(-2px); }
+.product-img { aspect-ratio: 4 / 3; }
+.product-card-info { padding: 16px 18px; }
+.product-card-info h4 { font-size: 1rem; margin: 0 0 4px; }
+.product-card-info p { color: var(--color-muted); font-size: 0.85rem; margin: 0 0 10px; }
+.product-card-info .price { font-weight: 700; color: var(--color-accent); }
 
 /* Galería / Carrusel */
 .carousel {

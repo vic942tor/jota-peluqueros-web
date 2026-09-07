@@ -97,6 +97,16 @@ export function initBooking() {
     const submitBtn = document.getElementById('bookingSubmit');
     const successEl = document.getElementById('bookingSuccess');
     const newOneBtn = document.getElementById('bookingNewOne');
+    const phoneInput = document.getElementById('bookingPhone');
+
+    // Campo de teléfono con banderas reales y detección de prefijo (intl-tel-input,
+    // cargado por <script>/<link> en el <head> de la página).
+    const phoneIti = window.intlTelInput?.(phoneInput, {
+        initialCountry: 'es',
+        preferredCountries: ['es', 'pt', 'gb', 'fr', 'de', 'it'],
+        separateDialCode: true,
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js',
+    });
 
     let currentAvailability = {}; // { staffId: { nombre, slots: [...] } }
     let selectedSlot = null;
@@ -119,6 +129,7 @@ export function initBooking() {
 
     function resetForm() {
         form.reset();
+        phoneIti?.setCountry('es');
         slotsField.hidden = true;
         staffField.hidden = true;
         contactFields.hidden = true;
@@ -249,11 +260,15 @@ export function initBooking() {
         e.preventDefault();
         const fecha = dateInput.value;
         const nombre = document.getElementById('bookingName').value.trim();
-        const prefijo = document.getElementById('bookingPhonePrefix').value;
-        const numero = document.getElementById('bookingPhone').value.trim();
-        const telefono = numero ? `${prefijo} ${numero}` : '';
+        // getNumber() da el número completo en formato internacional (+34600000000),
+        // combinando el país elegido en el desplegable de banderas con lo escrito.
+        const telefono = phoneIti ? phoneIti.getNumber() : phoneInput.value.trim();
 
-        if (!fecha || !selectedSlot || !nombre || !numero) return;
+        if (!fecha || !selectedSlot || !nombre || !phoneInput.value.trim()) return;
+        if (phoneIti && !phoneIti.isValidNumber()) {
+            statusEl.textContent = 'Revisa el número de teléfono, no parece válido.';
+            return;
+        }
 
         // "Cualquiera": elegimos el primer peluquero libre en esa hora.
         let staffId = selectedStaffId;

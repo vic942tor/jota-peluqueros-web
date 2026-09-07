@@ -18,5 +18,16 @@ export async function loadPartials() {
                 .then(html => { footerSlot.innerHTML = html; })
         );
     }
+
+    tasks.push(
+        fetch('partials/booking-modal.html')
+            .then(r => r.text())
+            .then(html => {
+                const container = document.createElement('div');
+                container.innerHTML = html;
+                document.body.appendChild(container.firstElementChild);
+            })
+    );
+
     await Promise.all(tasks);
 }

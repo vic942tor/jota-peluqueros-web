@@ -1,0 +1,41 @@
+<div class="booking-overlay" id="bookingOverlay" hidden>
+    <div class="booking-modal" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+        <button type="button" class="booking-close" id="bookingClose" aria-label="Cerrar">&times;</button>
+
+        <h2 id="bookingTitle">Pide tu cita</h2>
+
+        <form id="bookingForm" novalidate>
+            <div class="booking-field">
+                <label for="bookingDate">Fecha</label>
+                <input type="date" id="bookingDate" name="fecha" required>
+            </div>
+
+            <div class="booking-field" id="bookingSlotsField" hidden>
+                <label>Hora</label>
+                <div class="booking-slots" id="bookingSlots"></div>
+            </div>
+
+            <div class="booking-field" id="bookingStaffField" hidden>
+                <label>Peluquero/a</label>
+                <div class="booking-slots" id="bookingStaffOptions"></div>
+            </div>
+
+            <p class="booking-status" id="bookingStatus" aria-live="polite"></p>
+
+            <div class="booking-field" id="bookingContactFields" hidden>
+                <label for="bookingName">Nombre</label>
+                <input type="text" id="bookingName" name="nombre" required autocomplete="name">
+
+                <label for="bookingPhone">Teléfono</label>
+                <input type="tel" id="bookingPhone" name="telefono" required autocomplete="tel" placeholder="600 000 000">
+            </div>
+
+            <button type="submit" class="btn-primary booking-submit" id="bookingSubmit" hidden>Confirmar cita</button>
+        </form>
+
+        <div class="booking-success" id="bookingSuccess" hidden>
+            <p>¡Cita confirmada! Te esperamos.</p>
+            <button type="button" class="btn-primary" id="bookingNewOne">Pedir otra cita</button>
+        </div>
+    </div>
+</div>

@@ -291,6 +291,26 @@ export function initBooking() {
             return;
         }
 
+        submitBtn.disabled = true;
+        try {
+            const bId = await getBusinessId();
+            const { data: puedeReservar, error: checkError } = await supabase.rpc('can_client_book', {
+                p_business_id: bId,
+                p_telefono: telefono,
+            });
+            if (checkError) throw checkError;
+            if (!puedeReservar) {
+                statusEl.textContent = t('booking.bookingLimitReached');
+                submitBtn.disabled = false;
+                return;
+            }
+        } catch (err) {
+            submitBtn.disabled = false;
+            statusEl.textContent = t('booking.availabilityError');
+            return;
+        }
+        submitBtn.disabled = false;
+
         // "Cualquiera": elegimos el primer peluquero libre en esa hora.
         let staffId = selectedStaffId;
         if (!staffId) {

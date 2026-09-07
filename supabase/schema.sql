@@ -66,6 +66,7 @@ create table appointments (
     business_id uuid not null references businesses(id) on delete cascade,
     staff_id uuid not null references staff(id),
     servicio_id uuid references services(id),
+    client_id uuid,
     cliente_nombre text not null,
     cliente_telefono text not null,
     fecha date not null,
@@ -80,6 +81,27 @@ create table appointments (
     -- evita que dos citas se solapen exactamente en el mismo hueco del mismo peluquero
     unique (staff_id, fecha, hora_inicio)
 );
+
+-- Ficha de cliente: junta todas las citas de la misma persona (por teléfono),
+-- cuenta cuántas veces no se ha presentado, y sirve de base para limitar
+-- reservas abusivas. Se enlaza sola con cada cita nueva (ver sección 6).
+create table clients (
+    id uuid primary key default gen_random_uuid(),
+    business_id uuid not null references businesses(id) on delete cascade,
+    nombre text not null,
+    telefono text not null,
+    no_show_count integer not null default 0,
+    -- El peluquero lo activa a mano cuando pasa algo raro con el cliente
+    -- (no solo no presentarse — grosero, problema al pagar, lo que sea).
+    -- No bloquea nada por sí solo, solo avisa en el panel para la próxima vez.
+    aviso boolean not null default false,
+    notas text,
+    created_at timestamptz not null default now(),
+    unique (business_id, telefono)
+);
+
+alter table appointments add constraint appointments_client_id_fkey
+    foreign key (client_id) references clients(id);
 
 -- ============================================================
 -- 4. STOCK / PRODUCTOS
@@ -163,6 +185,81 @@ as $$
     select id from staff where user_id = auth.uid() limit 1;
 $$;
 
+-- Al crear una cita, engancha (o crea) la ficha de cliente por teléfono
+-- automáticamente — nadie tiene que gestionar esto a mano.
+create function link_appointment_to_client()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+    v_client_id uuid;
+begin
+    insert into clients (business_id, nombre, telefono)
+    values (new.business_id, new.cliente_nombre, new.cliente_telefono)
+    on conflict (business_id, telefono)
+    do update set nombre = excluded.nombre
+    returning id into v_client_id;
+
+    new.client_id := v_client_id;
+    return new;
+end;
+$$;
+
+create trigger trg_link_appointment_to_client
+    before insert on appointments
+    for each row execute function link_appointment_to_client();
+
+-- Cuenta automáticamente los "no presentado" en la ficha del cliente (el
+-- peluquero marca la cita como no_show a mano; esto solo suma el contador
+-- para que se vea en el panel — no bloquea nada por sí solo).
+create function bump_no_show_count()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+    if new.estado = 'no_show' and old.estado is distinct from 'no_show' and new.client_id is not null then
+        update clients set no_show_count = no_show_count + 1 where id = new.client_id;
+    end if;
+    return new;
+end;
+$$;
+
+create trigger trg_bump_no_show_count
+    after update on appointments
+    for each row execute function bump_no_show_count();
+
+-- La web pública consulta esto antes de dejar confirmar una reserva: máximo
+-- 5 citas por mes natural por teléfono (ajustable aquí). El contador de "no
+-- presentado" NO bloquea nada automáticamente — es solo informativo, para
+-- que el dueño/peluquero lo vea en el panel y decida él mismo qué hacer.
+create function can_client_book(p_business_id uuid, p_telefono text)
+returns boolean
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+    v_citas_este_mes integer;
+begin
+    select count(*) into v_citas_este_mes
+    from appointments
+    where business_id = p_business_id
+      and cliente_telefono = p_telefono
+      and estado in ('reservada', 'completada')
+      and date_trunc('month', fecha) = date_trunc('month', current_date);
+
+    if v_citas_este_mes >= 5 then
+        return false;
+    end if;
+
+    return true;
+end;
+$$;
+
 -- ============================================================
 -- 7. SEGURIDAD A NIVEL DE FILA (RLS)
 -- ============================================================
@@ -175,6 +272,7 @@ alter table appointments enable row level security;
 alter table products enable row level security;
 alter table posts enable row level security;
 alter table post_media enable row level security;
+alter table clients enable row level security;
 
 -- Businesses: info pública (nombre, dirección, teléfono), solo admin edita
 create policy "businesses_select_public" on businesses for select using (true);
@@ -226,6 +324,16 @@ create policy "posts_select_public" on posts for select
 create policy "posts_write_admin" on posts for insert with check (is_admin());
 create policy "posts_update_admin" on posts for update using (is_admin());
 create policy "posts_delete_admin" on posts for delete using (is_admin());
+
+-- Clientes: son datos personales, nadie anónimo los lee directamente (solo a
+-- través de can_client_book(), que solo devuelve un true/false). Cualquier
+-- peluquero con sesión (no solo el admin) puede ver y activar el aviso de
+-- "cliente con algo raro" — así, cuando esa persona vuelva a reservar, quien
+-- vea la cita en el panel lo sabe, sin que tenga que enterarse solo el dueño.
+create policy "clients_select_staff" on clients for select using (true);
+create policy "clients_write_admin" on clients for insert with check (is_admin());
+create policy "clients_update_staff" on clients for update using (true);
+create policy "clients_delete_admin" on clients for delete using (is_admin());
 
 -- Fotos/vídeos de noticias: mismas reglas de visibilidad que la noticia a la que pertenecen
 create policy "post_media_select_public" on post_media for select

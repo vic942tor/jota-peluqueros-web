@@ -100,5 +100,6 @@
     "booking.raceCondition": "Uy, alguien acaba de reservar esa hora. Elige otra.",
     "booking.genericError": "No se pudo confirmar la cita. Inténtalo de nuevo.",
     "booking.invalidPhone": "Revisa el número de teléfono, no parece válido.",
-    "booking.availabilityError": "No se pudo comprobar la disponibilidad. Inténtalo de nuevo."
+    "booking.availabilityError": "No se pudo comprobar la disponibilidad. Inténtalo de nuevo.",
+    "booking.bookingLimitReached": "No podemos completar la reserva online con este número. Llámanos directamente para reservar."
 }

@@ -100,5 +100,6 @@
     "booking.raceCondition": "Oops, someone just booked that slot. Please choose another.",
     "booking.genericError": "Couldn't confirm the appointment. Please try again.",
     "booking.invalidPhone": "Please check the phone number, it doesn't look valid.",
-    "booking.availabilityError": "Couldn't check availability. Please try again."
+    "booking.availabilityError": "Couldn't check availability. Please try again.",
+    "booking.bookingLimitReached": "We can't complete an online booking with this number. Please call us directly to book."
 }

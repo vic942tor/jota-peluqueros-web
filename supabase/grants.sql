@@ -14,5 +14,9 @@ grant select, insert on appointments to anon;
 -- Aquí se concede el permiso amplio; las reglas RLS ya existentes son las que
 -- de verdad deciden qué puede editar cada uno (solo admin, o solo su propia fila).
 grant select, insert, update, delete on
-    businesses, staff, shifts, staff_status_overrides, services, appointments, products, posts, post_media
+    businesses, staff, shifts, staff_status_overrides, services, appointments, products, posts, post_media, clients
 to authenticated;
+
+-- can_client_book(): la web pública la necesita para comprobar el límite de
+-- reservas antes de confirmar una cita, sin poder leer la tabla clients en sí.
+grant execute on function can_client_book(uuid, text) to anon, authenticated;

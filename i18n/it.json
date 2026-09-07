@@ -100,5 +100,6 @@
     "booking.raceCondition": "Ops, qualcuno ha appena prenotato questo orario. Scegline un altro.",
     "booking.genericError": "Impossibile confermare l'appuntamento. Riprova.",
     "booking.invalidPhone": "Controlla il numero di telefono, non sembra valido.",
-    "booking.availabilityError": "Impossibile verificare la disponibilità. Riprova."
+    "booking.availabilityError": "Impossibile verificare la disponibilità. Riprova.",
+    "booking.bookingLimitReached": "Non possiamo completare la prenotazione online con questo numero. Chiamaci direttamente per prenotare."
 }

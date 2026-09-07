@@ -100,5 +100,6 @@
     "booking.raceCondition": "Hoppla, dieser Termin wurde gerade vergeben. Bitte eine andere Uhrzeit wählen.",
     "booking.genericError": "Der Termin konnte nicht bestätigt werden. Bitte erneut versuchen.",
     "booking.invalidPhone": "Bitte die Telefonnummer prüfen, sie scheint ungültig zu sein.",
-    "booking.availabilityError": "Verfügbarkeit konnte nicht geprüft werden. Bitte erneut versuchen."
+    "booking.availabilityError": "Verfügbarkeit konnte nicht geprüft werden. Bitte erneut versuchen.",
+    "booking.bookingLimitReached": "Mit dieser Nummer ist online gerade keine Buchung möglich. Bitte rufen Sie uns direkt an."
 }

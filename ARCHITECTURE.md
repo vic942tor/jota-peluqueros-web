@@ -120,12 +120,23 @@ Esto no bloquea empezar a construir — se puede avanzar en paralelo y hacer la 
 
 ## 7. Pendiente de confirmar con el dueño (sin bloquear el inicio)
 
+Datos legales, ubicación, contenido y pagos (8 puntos que hay que preguntarle en persona):
+- NIF/CIF del negocio, email de contacto oficial y forma jurídica (¿"Jota Peluqueros" tal cual, autónomo a su nombre, u otra razón social?) — necesarios para terminar el aviso legal y la política de privacidad.
+- Dirección definitiva del local (la actual, San Felipe/La Centinela, va a cambiar).
+- Precios definitivos de sus servicios.
+- Fotos reales: local, equipo, trabajos realizados.
+- Redes sociales, si tiene, para enlazarlas en el footer.
 - Cómo funciona exactamente el datáfono (standalone o con alguna integración) — de momento se asume standalone, sin integración de pagos en el sistema.
-- Catálogo de precios reales de sus servicios.
-- Reasignación de citas de emergencia: libre o con aprobación.
-- Acceso/formato de los datos de Steel Wing.
-- Si quiere notificaciones por WhatsApp/SMS para clientes, o se queda solo con email (decisión ya aplazada anteriormente).
-- Cómo quiere ver exactamente el cálculo de beneficios semanales (¿solo suma de `precio_cobrado`? ¿por peluquero? ¿con comisión?).
+
+Tarea aparte del desarrollador (no es pregunta para el dueño):
+- Revisar en persona el propio Steel Wing para ver si permite exportar el histórico de clientes/citas, y en qué formato.
+
+Decisiones ya tomadas (no hace falta volver a preguntarlas):
+- **Catálogo de productos: sin venta online**, solo informativo. Lo carga el desarrollador y luego el propio dueño desde el Panel Jota, a mano, según va habiendo productos nuevos.
+- **Reasignación de citas de emergencia entre peluqueros**: el propio dueño la configura desde el Panel Jota cuando lo use — no es una pregunta a hacer ahora, es un ajuste operativo suyo del día a día.
+- **Notificaciones por WhatsApp/SMS para clientes**: sí, se activará más adelante (aplazado solo por el coste del plan de pago necesario, no por falta de interés).
+- **Analítica de visitas a la web**: sí le interesa — pendiente elegir herramienta (Plausible/Umami) y que él cree la cuenta.
+- **Cálculo de beneficios semanales**: pendiente de detallar la fórmula exacta con el desarrollador (quien ya tiene claro el criterio del dueño), no requiere pregunta adicional en la reunión.
 
 ---
 

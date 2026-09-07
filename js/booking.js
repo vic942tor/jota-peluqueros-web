@@ -24,11 +24,33 @@ function slotsInRange(horaInicio, horaFin) {
     return slots;
 }
 
+// La hora "de verdad" es la de Canarias, no la del navegador de quien reserva.
+// Sin esto, alguien entrando desde la península (una hora por delante) vería
+// bloqueada una hora que en Canarias sigue libre, o al revés.
+function getCanariasNow() {
+    const fmt = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Atlantic/Canary',
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', hour12: false,
+    });
+    const parts = Object.fromEntries(fmt.formatToParts(new Date()).map((p) => [p.type, p.value]));
+    return {
+        dateStr: `${parts.year}-${parts.month}-${parts.day}`,
+        minutes: Number(parts.hour) * 60 + Number(parts.minute),
+    };
+}
+
+function addDaysToDateStr(dateStr, days) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const dt = new Date(Date.UTC(y, m - 1, d));
+    dt.setUTCDate(dt.getUTCDate() + days);
+    return dt.toISOString().slice(0, 10);
+}
+
 function isPastToday(fecha, hora) {
-    const now = new Date();
-    const todayStr = now.toISOString().slice(0, 10);
-    if (fecha !== todayStr) return false;
-    return timeToMinutes(hora) <= now.getHours() * 60 + now.getMinutes();
+    const { dateStr, minutes } = getCanariasNow();
+    if (fecha !== dateStr) return false;
+    return timeToMinutes(hora) <= minutes;
 }
 
 // Devuelve { [staffId]: { nombre, slots: [ 'HH:MM', ... ] } } con la disponibilidad real
@@ -122,11 +144,9 @@ export function initBooking() {
         return businessId;
     }
 
-    const todayStr = new Date().toISOString().slice(0, 10);
-    const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() + 56);
+    const { dateStr: todayStr } = getCanariasNow();
     dateInput.min = todayStr;
-    dateInput.max = maxDate.toISOString().slice(0, 10);
+    dateInput.max = addDaysToDateStr(todayStr, 56);
 
     function resetForm() {
         form.reset();

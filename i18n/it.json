@@ -65,6 +65,12 @@
     "ubicacion.hoursSunday": "Domenica: chiuso",
 
     "footer.tagline": "Il tuo stile, senza complicazioni.",
+    "footer.legalNotice": "Note legali",
+    "footer.privacyPolicy": "Informativa sulla privacy",
+
+    "notFound.title": "Pagina non trovata",
+    "notFound.text": "La pagina che cerchi non esiste o è stata spostata.",
+    "notFound.cta": "Torna alla home",
 
     "productos.eyebrow": "Prodotti",
     "productos.title": "Quello che usiamo, quello che vendiamo",

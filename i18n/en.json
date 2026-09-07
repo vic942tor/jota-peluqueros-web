@@ -65,6 +65,12 @@
     "ubicacion.hoursSunday": "Sunday: closed",
 
     "footer.tagline": "Your style, made simple.",
+    "footer.legalNotice": "Legal notice",
+    "footer.privacyPolicy": "Privacy policy",
+
+    "notFound.title": "Page not found",
+    "notFound.text": "Sorry, the page you're looking for doesn't exist or has moved.",
+    "notFound.cta": "Back to home",
 
     "productos.eyebrow": "Products",
     "productos.title": "What we use, what we sell",

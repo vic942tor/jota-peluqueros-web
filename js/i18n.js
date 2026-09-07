@@ -25,13 +25,18 @@ function detectLang() {
     return DEFAULT_LANG;
 }
 
+// Solo estas páginas tienen su título/descripción en los diccionarios de
+// idioma. El resto (avisos legales, futuras páginas nuevas...) conservan el
+// <title> y meta description que traigan escritos en su propio HTML.
+const META_PAGES = { index: ['meta.indexTitle', 'meta.indexDescription'], productos: ['meta.productosTitle', 'meta.productosDescription'] };
+
 function applyMeta() {
     document.documentElement.lang = currentLang;
 
-    const page = document.body.dataset.page === 'productos' ? 'productos' : 'index';
-    const titleKey = page === 'productos' ? 'meta.productosTitle' : 'meta.indexTitle';
-    const descKey = page === 'productos' ? 'meta.productosDescription' : 'meta.indexDescription';
+    const page = document.body.dataset.page || 'index';
+    if (!META_PAGES[page]) return;
 
+    const [titleKey, descKey] = META_PAGES[page];
     document.title = t(titleKey);
     const setContent = (selector, value) => {
         const el = document.querySelector(selector);
@@ -67,7 +72,7 @@ function updateSwitchUI(lang) {
 }
 
 async function loadDict(lang) {
-    const res = await fetch(`i18n/${lang}.json`);
+    const res = await fetch(`i18n/${lang}.json`, { cache: 'no-cache' });
     return res.json();
 }
 

@@ -403,6 +403,45 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
 .page-hero h1 { font-size: 2.25rem; margin: 0 0 14px; }
 .page-hero p { color: var(--color-muted); max-width: 560px; margin: 0 auto; font-size: 1.05rem; }
 
+/* Página 404 */
+.not-found {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 20px;
+}
+.not-found-code {
+    font-family: var(--font-serif);
+    font-size: 5rem;
+    color: var(--color-brand-accent);
+    margin: 0;
+    line-height: 1;
+}
+.not-found h1 { margin: 12px 0 10px; }
+.not-found p:not(.not-found-code) { color: var(--color-muted); max-width: 420px; margin: 0 auto 28px; }
+.not-found-cta { display: inline-block; width: auto; padding-left: 32px; padding-right: 32px; }
+
+/* Páginas legales (aviso legal, privacidad) */
+.legal-page .section-inner { max-width: 760px; }
+.legal-page h2 { font-size: 1.3rem; margin: 40px 0 12px; }
+.legal-page h2:first-child { margin-top: 0; }
+.legal-page p { color: var(--color-muted); line-height: 1.75; margin: 0 0 14px; }
+.legal-page ul { color: var(--color-muted); line-height: 1.8; padding-left: 20px; margin: 0 0 14px; }
+.legal-page a { color: var(--color-brand-accent); }
+.legal-pending {
+    display: inline-block;
+    background: rgba(212, 163, 115, 0.15);
+    border: 1px dashed var(--color-brand-accent);
+    border-radius: 6px;
+    padding: 1px 8px;
+    color: var(--color-brand-accent);
+    font-style: italic;
+    font-size: 0.92em;
+}
+.legal-updated { font-size: 0.85rem; color: var(--color-muted); margin-top: 32px; }
+
 /* Productos */
 .products-grid {
     display: grid;
@@ -554,6 +593,9 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
 .footer-nav a:hover, .footer-contact a:hover { color: var(--color-brand-accent); }
 .footer-contact .location-link { display: inline; }
 .footer-bottom { text-align: center; margin: 0; font-size: 0.82rem; }
+.footer-legal-links { display: block; margin-top: 4px; }
+.footer-legal-links a { color: var(--color-muted); text-decoration: underline; }
+.footer-legal-links a:hover { color: var(--color-brand-accent); }
 
 /* Modal de reservas — tarjeta clara al estilo de los widgets de reserva
    habituales (Booksy y similares): píldoras redondeadas para las horas,

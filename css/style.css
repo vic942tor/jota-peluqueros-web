@@ -19,6 +19,11 @@
 
 * { box-sizing: border-box; }
 
+/* Un elemento con [hidden] debe estar SIEMPRE oculto, aunque alguna clase
+   le ponga display:flex/block más abajo en la hoja de estilos (si no, la
+   clase gana y el elemento se ve vacío en vez de desaparecer). */
+[hidden] { display: none !important; }
+
 .skip-link {
     position: absolute;
     top: -100px;
@@ -494,7 +499,9 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
 .footer-contact .location-link { display: inline; }
 .footer-bottom { text-align: center; margin: 0; font-size: 0.82rem; }
 
-/* Modal de reservas */
+/* Modal de reservas — tarjeta clara al estilo de los widgets de reserva
+   habituales (Booksy y similares): píldoras redondeadas para las horas,
+   avatares circulares con iniciales para elegir peluquero. */
 .booking-overlay {
     position: fixed;
     inset: 0;
@@ -508,74 +515,120 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
 .booking-modal {
     position: relative;
     width: 100%;
-    max-width: 420px;
+    max-width: 440px;
     max-height: 90vh;
     overflow-y: auto;
-    background: var(--color-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
+    background: #ffffff;
+    border-radius: 20px;
     box-shadow: var(--shadow-lift);
     padding: 32px 28px;
+    color: #1c1c1e;
 }
 .booking-modal h2 {
-    margin: 0 0 20px;
-    font-size: 1.5rem;
+    margin: 0 0 22px;
+    font-size: 1.4rem;
+    font-family: var(--font-serif);
+    color: #1c1c1e;
 }
 .booking-close {
     position: absolute;
     top: 14px;
     right: 14px;
-    background: none;
+    background: #f2f2f4;
     border: none;
-    color: var(--color-muted);
-    font-size: 1.6rem;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    color: #6b6b70;
+    font-size: 1.3rem;
     line-height: 1;
     cursor: pointer;
-    padding: 6px;
-    transition: color 0.2s var(--ease-fine);
+    transition: background 0.2s var(--ease-fine), color 0.2s var(--ease-fine);
 }
-.booking-close:hover { color: var(--color-text); }
+.booking-close:hover { background: #e8e8ea; color: #1c1c1e; }
 
-.booking-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+.booking-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
 .booking-field label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--color-muted);
-    letter-spacing: 0.02em;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #8a8a8f;
+    letter-spacing: 0.06em;
 }
-.booking-field input,
-.booking-field select {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 10px 12px;
-    color: var(--color-text);
+.booking-field input {
+    background: #f7f7f8;
+    border: 1px solid #e3e3e6;
+    border-radius: 10px;
+    padding: 11px 14px;
+    color: #1c1c1e;
     font-size: 1rem;
     font-family: inherit;
 }
-.booking-field input:focus,
-.booking-field select:focus { border-color: var(--color-brand-accent); }
+.booking-field input:focus { border-color: var(--color-brand-red); outline: none; }
 
 .booking-slots { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Horas: píldoras redondeadas */
 .booking-slot-btn {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 8px 12px;
-    color: var(--color-text);
+    background: #f7f7f8;
+    border: 1px solid #e3e3e6;
+    border-radius: 999px;
+    padding: 9px 16px;
+    color: #1c1c1e;
     font-size: 0.9rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: border-color 0.2s var(--ease-fine), background 0.2s var(--ease-fine);
+    transition: border-color 0.2s var(--ease-fine), background 0.2s var(--ease-fine), color 0.2s var(--ease-fine);
 }
-.booking-slot-btn:hover { border-color: var(--color-brand-accent); }
+.booking-slot-btn:hover { border-color: var(--color-brand-red); }
 .booking-slot-btn.is-selected {
-    background: var(--color-brand-accent);
-    border-color: var(--color-brand-accent);
-    color: var(--color-brand-dark);
+    background: var(--color-brand-red);
+    border-color: var(--color-brand-red);
+    color: #fff;
     font-weight: 600;
 }
 
-.booking-status { min-height: 1.2em; font-size: 0.9rem; color: var(--color-muted); margin: 4px 0 12px; }
+/* Peluqueros: tarjeta con avatar circular (iniciales) + nombre debajo */
+.booking-staff-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    width: 74px;
+}
+.booking-staff-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #f0e4d8;
+    color: var(--color-brand-red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: 2px solid transparent;
+    transition: border-color 0.2s var(--ease-fine), background 0.2s var(--ease-fine);
+}
+.booking-staff-btn .booking-staff-name {
+    font-size: 0.78rem;
+    color: #4a4a4e;
+    text-align: center;
+    line-height: 1.2;
+}
+.booking-staff-btn:hover .booking-staff-avatar { border-color: #e3c9ae; }
+.booking-staff-btn.is-selected .booking-staff-avatar {
+    background: var(--color-brand-red);
+    color: #fff;
+    border-color: var(--color-brand-red);
+}
+.booking-staff-btn.is-selected .booking-staff-name { color: #1c1c1e; font-weight: 600; }
+
+.booking-status { min-height: 1.2em; font-size: 0.9rem; color: #6b6b70; margin: 4px 0 12px; }
 
 .btn-primary {
     display: block;
@@ -583,8 +636,8 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
     background: var(--color-accent);
     color: #fff;
     border: none;
-    border-radius: 8px;
-    padding: 12px 20px;
+    border-radius: 999px;
+    padding: 13px 20px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -594,7 +647,7 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
 .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
 .booking-success { text-align: center; padding: 12px 0; }
-.booking-success p { margin: 0 0 18px; font-size: 1.05rem; }
+.booking-success p { margin: 0 0 18px; font-size: 1.05rem; color: #1c1c1e; }
 
 /* Responsive */
 @media (max-width: 768px) {

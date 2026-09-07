@@ -150,25 +150,33 @@ export function initBooking() {
             .map(([id, entry]) => ({ id, nombre: entry.nombre }));
     }
 
+    function initials(nombre) {
+        return nombre.trim().charAt(0).toUpperCase();
+    }
+
+    function makeStaffButton(avatarText, label, id) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'booking-staff-btn';
+        btn.innerHTML = `
+            <span class="booking-staff-avatar">${avatarText}</span>
+            <span class="booking-staff-name">${label}</span>
+        `;
+        btn.addEventListener('click', () => selectStaff(id, btn));
+        return btn;
+    }
+
     function renderStaffOptions() {
         const free = staffFreeAtSlot(selectedSlot);
         staffOptions.innerHTML = '';
         selectedStaffId = '';
 
-        const anyBtn = document.createElement('button');
-        anyBtn.type = 'button';
-        anyBtn.className = 'booking-slot-btn is-selected';
-        anyBtn.textContent = 'Cualquiera disponible';
-        anyBtn.addEventListener('click', () => selectStaff('', anyBtn));
+        const anyBtn = makeStaffButton('★', 'Cualquiera', '');
+        anyBtn.classList.add('is-selected');
         staffOptions.appendChild(anyBtn);
 
         free.forEach(({ id, nombre }) => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'booking-slot-btn';
-            btn.textContent = nombre;
-            btn.addEventListener('click', () => selectStaff(id, btn));
-            staffOptions.appendChild(btn);
+            staffOptions.appendChild(makeStaffButton(initials(nombre), nombre, id));
         });
 
         staffField.hidden = false;
@@ -177,7 +185,7 @@ export function initBooking() {
     }
 
     function selectStaff(id, btn) {
-        staffOptions.querySelectorAll('.booking-slot-btn').forEach((b) => b.classList.remove('is-selected'));
+        staffOptions.querySelectorAll('.booking-staff-btn').forEach((b) => b.classList.remove('is-selected'));
         btn.classList.add('is-selected');
         selectedStaffId = id;
     }
@@ -303,6 +311,13 @@ export function initBooking() {
     });
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && !overlay.hidden) closeModal();
+    });
+
+    // El navegador solo abre el selector de fecha al hacer clic justo en el
+    // icono del calendario. Con showPicker() se abre al pulsar en cualquier
+    // parte del campo, más fácil para clientes que no se fijen en el icono.
+    dateInput.addEventListener('click', () => {
+        try { dateInput.showPicker?.(); } catch { /* navegador sin soporte, el clic normal sigue funcionando */ }
     });
 
     dateInput.addEventListener('change', onDateChange);

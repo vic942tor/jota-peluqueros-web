@@ -249,9 +249,11 @@ export function initBooking() {
         e.preventDefault();
         const fecha = dateInput.value;
         const nombre = document.getElementById('bookingName').value.trim();
-        const telefono = document.getElementById('bookingPhone').value.trim();
+        const prefijo = document.getElementById('bookingPhonePrefix').value;
+        const numero = document.getElementById('bookingPhone').value.trim();
+        const telefono = numero ? `${prefijo} ${numero}` : '';
 
-        if (!fecha || !selectedSlot || !nombre || !telefono) return;
+        if (!fecha || !selectedSlot || !nombre || !numero) return;
 
         // "Cualquiera": elegimos el primer peluquero libre en esa hora.
         let staffId = selectedStaffId;

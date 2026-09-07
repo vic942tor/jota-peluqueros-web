@@ -27,7 +27,18 @@
                 <input type="text" id="bookingName" name="nombre" required autocomplete="name">
 
                 <label for="bookingPhone">Teléfono</label>
-                <input type="tel" id="bookingPhone" name="telefono" required autocomplete="tel" placeholder="600 000 000">
+                <div class="booking-phone-row">
+                    <select id="bookingPhonePrefix" name="prefijo" aria-label="Prefijo">
+                        <option value="+34" selected>🇪🇸 +34</option>
+                        <option value="+351">🇵🇹 +351</option>
+                        <option value="+44">🇬🇧 +44</option>
+                        <option value="+33">🇫🇷 +33</option>
+                        <option value="+49">🇩🇪 +49</option>
+                        <option value="+39">🇮🇹 +39</option>
+                        <option value="+1">🇺🇸 +1</option>
+                    </select>
+                    <input type="tel" id="bookingPhone" name="telefono" required autocomplete="tel" placeholder="600 000 000">
+                </div>
             </div>
 
             <button type="submit" class="btn-primary booking-submit" id="bookingSubmit" hidden>Confirmar cita</button>

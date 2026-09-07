@@ -566,6 +566,21 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
 }
 .booking-field input:focus { border-color: var(--color-brand-red); outline: none; }
 
+.booking-phone-row { display: flex; gap: 8px; }
+.booking-phone-row select {
+    background: #f7f7f8;
+    border: 1px solid #e3e3e6;
+    border-radius: 10px;
+    padding: 11px 8px;
+    color: #1c1c1e;
+    font-size: 0.95rem;
+    font-family: inherit;
+    flex: 0 0 auto;
+    width: 92px;
+}
+.booking-phone-row select:focus { border-color: var(--color-brand-red); outline: none; }
+.booking-phone-row input { flex: 1 1 auto; min-width: 0; }
+
 .booking-slots { display: flex; flex-wrap: wrap; gap: 8px; }
 
 /* Horas: píldoras redondeadas */

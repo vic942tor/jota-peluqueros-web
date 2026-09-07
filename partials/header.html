@@ -1,6 +1,19 @@
 <header class="site-header">
     <div class="header-inner">
         <a href="index.html" class="logo"><img src="img/logo.png" alt="Jota Peluqueros" class="logo-img" width="871" height="334"></a>
+        <div class="lang-switch" id="langSwitch">
+            <button type="button" class="lang-switch-toggle" id="langSwitchToggle" aria-haspopup="listbox" aria-expanded="false">
+                <img src="https://flagcdn.com/w20/es.png" alt="" width="20" height="15" id="langSwitchFlag">
+                <span id="langSwitchCode">Español</span>
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <ul class="lang-switch-menu" id="langSwitchMenu" role="listbox" hidden>
+                <li role="option"><button type="button" data-lang-switch="es"><img src="https://flagcdn.com/w20/es.png" alt="" width="20" height="15"> Español</button></li>
+                <li role="option"><button type="button" data-lang-switch="en"><img src="https://flagcdn.com/w20/gb.png" alt="" width="20" height="15"> English</button></li>
+                <li role="option"><button type="button" data-lang-switch="de"><img src="https://flagcdn.com/w20/de.png" alt="" width="20" height="15"> Deutsch</button></li>
+                <li role="option"><button type="button" data-lang-switch="it"><img src="https://flagcdn.com/w20/it.png" alt="" width="20" height="15"> Italiano</button></li>
+            </ul>
+        </div>
         <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" data-i18n-aria-label="nav.toggleAria" aria-expanded="false" aria-controls="siteNav">
             <span></span><span></span><span></span>
         </button>
@@ -14,22 +27,10 @@
                 type="button"
                 class="nav-cta"
                 id="bookingTrigger"
+                data-open-booking
                 data-i18n="nav.cta">
                 Pide tu cita
             </button>
-            <div class="lang-switch" id="langSwitch">
-                <button type="button" class="lang-switch-toggle" id="langSwitchToggle" aria-haspopup="listbox" aria-expanded="false">
-                    <img src="https://flagcdn.com/w20/es.png" alt="" width="20" height="15" id="langSwitchFlag">
-                    <span id="langSwitchCode">Español</span>
-                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <ul class="lang-switch-menu" id="langSwitchMenu" role="listbox" hidden>
-                    <li role="option"><button type="button" data-lang-switch="es"><img src="https://flagcdn.com/w20/es.png" alt="" width="20" height="15"> Español</button></li>
-                    <li role="option"><button type="button" data-lang-switch="en"><img src="https://flagcdn.com/w20/gb.png" alt="" width="20" height="15"> English</button></li>
-                    <li role="option"><button type="button" data-lang-switch="de"><img src="https://flagcdn.com/w20/de.png" alt="" width="20" height="15"> Deutsch</button></li>
-                    <li role="option"><button type="button" data-lang-switch="it"><img src="https://flagcdn.com/w20/it.png" alt="" width="20" height="15"> Italiano</button></li>
-                </ul>
-            </div>
         </nav>
     </div>
 </header>

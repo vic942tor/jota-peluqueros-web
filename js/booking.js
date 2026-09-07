@@ -85,7 +85,7 @@ export function initBooking() {
     const overlay = document.getElementById('bookingOverlay');
     if (!overlay) return; // partial no cargado en esta página (no debería pasar, pero por seguridad)
 
-    const trigger = document.getElementById('bookingTrigger');
+    const triggers = document.querySelectorAll('[data-open-booking]');
     const closeBtn = document.getElementById('bookingClose');
     const form = document.getElementById('bookingForm');
     const dateInput = document.getElementById('bookingDate');
@@ -322,7 +322,7 @@ export function initBooking() {
         successEl.hidden = false;
     }
 
-    trigger?.addEventListener('click', openModal);
+    triggers.forEach((btn) => btn.addEventListener('click', openModal));
     closeBtn.addEventListener('click', closeModal);
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) closeModal();

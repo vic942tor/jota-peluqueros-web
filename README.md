@@ -111,25 +111,29 @@ Luego abrir `http://localhost:5173`. **`file://` no funciona**: `js/partials.js`
 
 ## Sistema de diseño
 
-Definido en `:root` en `css/style.css`, tema oscuro con acento rojo/dorado (inspirado en el logo de neón del local):
+Definido en `:root` en `css/style.css`, tema **claro** con acento **gris azulado**, fiel a los colores reales del local renovado (grisáceo azulado, blanco y negro):
 
 ```css
---color-bg: #17181c;
---color-bg-alt: #1e2027;
---color-card: #24262d;
---color-text: #f4f4f5;
---color-muted: #a1a1aa;
---color-border: #34363d;
---color-accent: #b91c1c;       /* rojo — CTA principal, botón "Pide tu cita" */
---color-accent-hover: #991b1b;
---color-brand-accent: #d4a373; /* dorado/melocotón */
---color-brand-dark: #101114;
+--color-bg: #F2F4F6;
+--color-bg-alt: #E6EAEE;
+--color-card: #FFFFFF;
+--color-text: #1C2126;
+--color-muted: #5B6672;
+--color-border: #D8DEE3;
+--color-accent: #3E4C5E;       /* gris azulado — CTA principal, botón "Pide tu cita" */
+--color-accent-hover: #2E3946;
+--color-brand-accent: #7B8A99; /* gris azulado más claro — acentos secundarios */
+--color-brand-dark: #2B3542;   /* franja oscura de header/hero/footer, para que el logo destaque */
+--color-text-inverse: #F3F5F7;
+--color-muted-inverse: #9AA5B0;
 --radius: 12px;
 --font-serif: Georgia, 'Times New Roman', Times, serif;
 --ease-fine: cubic-bezier(0.22, 1, 0.36, 1);
 ```
 
-Tipografía: fuente del sistema para el cuerpo, serif (`--font-serif`) para titulares — sin fuentes externas cargadas, por rendimiento. El **modal de reservas** rompe a propósito con el tema oscuro del sitio: es una tarjeta clara (blanco), con horas en píldoras redondeadas y peluqueros como avatares circulares con inicial — el mismo lenguaje visual que usan los widgets de reserva de referencia del sector (Booksy y similares).
+El sitio combina dos superficies a propósito: la mayor parte es clara (blanco/gris azulado muy claro, texto oscuro), y el header, el hero y el footer usan una franja oscura gris azulado (`--color-brand-dark`) para que el logo (con el texto "Jota" en blanco) se lea bien sin necesitar ninguna caja o placa de fondo — el propio logo, con fondo transparente, se apoya directamente sobre esa franja.
+
+Tipografía: fuente del sistema para el cuerpo, serif (`--font-serif`) para titulares — sin fuentes externas cargadas, por rendimiento. El **modal de reservas** es una tarjeta clara (blanco) con horas en píldoras redondeadas y peluqueros como avatares circulares con inicial — el mismo lenguaje visual que usan los widgets de reserva de referencia del sector (Booksy y similares).
 
 ---
 

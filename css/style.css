@@ -122,31 +122,59 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
 }
 .site-nav a:hover { color: var(--color-brand-accent); }
 .site-nav a[aria-current="page"], .footer-nav a[aria-current="page"] { color: var(--color-brand-accent); }
-.lang-switch {
+.lang-switch { position: relative; }
+.lang-switch-toggle {
     display: flex;
-    gap: 2px;
+    align-items: center;
+    gap: 6px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid var(--color-border);
     border-radius: 999px;
-    padding: 3px;
-}
-.lang-switch button {
-    background: none;
-    border: none;
-    color: var(--color-muted);
-    font-size: 0.72rem;
+    padding: 6px 10px;
+    color: var(--color-text);
+    font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.03em;
-    padding: 5px 9px;
-    border-radius: 999px;
     cursor: pointer;
-    transition: background 0.2s var(--ease-fine), color 0.2s var(--ease-fine);
+    transition: border-color 0.2s var(--ease-fine);
 }
-.lang-switch button:hover { color: var(--color-text); }
-.lang-switch button.is-active {
-    background: var(--color-brand-accent);
-    color: var(--color-brand-dark);
+.lang-switch-toggle:hover { border-color: var(--color-brand-accent); }
+.lang-switch-toggle img { display: block; border-radius: 2px; }
+.lang-switch-toggle svg { color: var(--color-muted); transition: transform 0.2s var(--ease-fine); }
+.lang-switch-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+.lang-switch-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 140px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lift);
+    padding: 6px;
+    list-style: none;
+    margin: 0;
+    z-index: 10;
 }
+.lang-switch-menu li { display: block; }
+.lang-switch-menu button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: #1c1c1e;
+    font-size: 0.88rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s var(--ease-fine);
+}
+.lang-switch-menu button:hover { background: #f2f2f4; }
+.lang-switch-menu button.is-active { font-weight: 700; color: var(--color-brand-red); }
+.lang-switch-menu img { display: block; border-radius: 2px; }
 
 .nav-cta {
     background: var(--color-accent);

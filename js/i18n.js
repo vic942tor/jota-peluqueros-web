@@ -1,6 +1,8 @@
 const SUPPORTED = ['es', 'en', 'de', 'it'];
 const DEFAULT_LANG = 'es';
 const STORAGE_KEY = 'jota-lang';
+const FLAG_CODE = { es: 'es', en: 'gb', de: 'de', it: 'it' };
+const NATIVE_NAME = { es: 'Español', en: 'English', de: 'Deutsch', it: 'Italiano' };
 
 let dict = {};
 let currentLang = DEFAULT_LANG;
@@ -54,6 +56,16 @@ function applyDom(root = document) {
     });
 }
 
+function updateSwitchUI(lang) {
+    const flagImg = document.getElementById('langSwitchFlag');
+    const codeEl = document.getElementById('langSwitchCode');
+    if (flagImg) flagImg.src = `https://flagcdn.com/w20/${FLAG_CODE[lang]}.png`;
+    if (codeEl) codeEl.textContent = NATIVE_NAME[lang];
+    document.querySelectorAll('[data-lang-switch]').forEach((btn) => {
+        btn.classList.toggle('is-active', btn.dataset.langSwitch === lang);
+    });
+}
+
 async function loadDict(lang) {
     const res = await fetch(`i18n/${lang}.json`);
     return res.json();
@@ -66,19 +78,49 @@ export async function setLang(lang) {
     dict = await loadDict(lang);
     applyMeta();
     applyDom();
-    document.querySelectorAll('[data-lang-switch]').forEach((btn) => {
-        btn.classList.toggle('is-active', btn.dataset.langSwitch === lang);
-    });
+    updateSwitchUI(lang);
     document.dispatchEvent(new CustomEvent('i18n:changed'));
+}
+
+function closeLangMenu() {
+    const menu = document.getElementById('langSwitchMenu');
+    const toggle = document.getElementById('langSwitchToggle');
+    if (menu) menu.hidden = true;
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+}
+
+function initLangSwitchUI() {
+    const toggle = document.getElementById('langSwitchToggle');
+    const menu = document.getElementById('langSwitchMenu');
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = !menu.hidden;
+        menu.hidden = isOpen;
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!menu.hidden && !e.target.closest('#langSwitch')) closeLangMenu();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLangMenu();
+    });
+
+    menu.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-lang-switch]');
+        if (btn) {
+            setLang(btn.dataset.langSwitch);
+            closeLangMenu();
+        }
+    });
 }
 
 export async function initI18n() {
     await setLang(detectLang());
-
-    document.addEventListener('click', (e) => {
-        const btn = e.target.closest('[data-lang-switch]');
-        if (btn) setLang(btn.dataset.langSwitch);
-    });
+    initLangSwitchUI();
 }
 
 // Re-traduce cualquier contenido nuevo inyectado después (p. ej. el modal

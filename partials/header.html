@@ -10,12 +10,6 @@
             <a href="productos.html" data-page="productos" data-i18n="nav.productos">Productos</a>
             <a href="#" data-anchor="galeria" data-i18n="nav.galeria">Galería</a>
             <a href="#" data-anchor="ubicacion" data-i18n="nav.ubicacion">Ubicación</a>
-            <div class="lang-switch" role="group" aria-label="Idioma / Language">
-                <button type="button" data-lang-switch="es">ES</button>
-                <button type="button" data-lang-switch="en">EN</button>
-                <button type="button" data-lang-switch="de">DE</button>
-                <button type="button" data-lang-switch="it">IT</button>
-            </div>
             <button
                 type="button"
                 class="nav-cta"
@@ -23,6 +17,19 @@
                 data-i18n="nav.cta">
                 Pide tu cita
             </button>
+            <div class="lang-switch" id="langSwitch">
+                <button type="button" class="lang-switch-toggle" id="langSwitchToggle" aria-haspopup="listbox" aria-expanded="false">
+                    <img src="https://flagcdn.com/w20/es.png" alt="" width="20" height="15" id="langSwitchFlag">
+                    <span id="langSwitchCode">Español</span>
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <ul class="lang-switch-menu" id="langSwitchMenu" role="listbox" hidden>
+                    <li role="option"><button type="button" data-lang-switch="es"><img src="https://flagcdn.com/w20/es.png" alt="" width="20" height="15"> Español</button></li>
+                    <li role="option"><button type="button" data-lang-switch="en"><img src="https://flagcdn.com/w20/gb.png" alt="" width="20" height="15"> English</button></li>
+                    <li role="option"><button type="button" data-lang-switch="de"><img src="https://flagcdn.com/w20/de.png" alt="" width="20" height="15"> Deutsch</button></li>
+                    <li role="option"><button type="button" data-lang-switch="it"><img src="https://flagcdn.com/w20/it.png" alt="" width="20" height="15"> Italiano</button></li>
+                </ul>
+            </div>
         </nav>
     </div>
 </header>

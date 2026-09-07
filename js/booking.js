@@ -1,4 +1,5 @@
 import { supabase } from './supabaseClient.js';
+import { t } from './i18n.js';
 
 const SLOT_MINUTES = 30;
 
@@ -182,7 +183,7 @@ export function initBooking() {
         staffOptions.innerHTML = '';
         selectedStaffId = '';
 
-        const anyBtn = makeStaffButton('★', 'Cualquiera', '');
+        const anyBtn = makeStaffButton('★', t('booking.anyStaff'), '');
         anyBtn.classList.add('is-selected');
         staffOptions.appendChild(anyBtn);
 
@@ -215,7 +216,7 @@ export function initBooking() {
 
         if (slots.length === 0) {
             slotsField.hidden = true;
-            statusEl.textContent = 'No hay disponibilidad ese día. Prueba otra fecha.';
+            statusEl.textContent = t('booking.noAvailability');
             return;
         }
 
@@ -245,11 +246,11 @@ export function initBooking() {
         submitBtn.hidden = true;
         if (!fecha) return;
 
-        statusEl.textContent = 'Buscando horas libres...';
+        statusEl.textContent = t('booking.loadingSlots');
         try {
             currentAvailability = await getAvailability(fecha);
         } catch (err) {
-            statusEl.textContent = 'No se pudo comprobar la disponibilidad. Inténtalo de nuevo.';
+            statusEl.textContent = t('booking.availabilityError');
             return;
         }
 
@@ -266,7 +267,7 @@ export function initBooking() {
 
         if (!fecha || !selectedSlot || !nombre || !phoneInput.value.trim()) return;
         if (phoneIti && !phoneIti.isValidNumber()) {
-            statusEl.textContent = 'Revisa el número de teléfono, no parece válido.';
+            statusEl.textContent = t('booking.invalidPhone');
             return;
         }
 
@@ -276,7 +277,7 @@ export function initBooking() {
             staffId = staffFreeAtSlot(selectedSlot)[0]?.id;
         }
         if (!staffId) {
-            statusEl.textContent = 'Esa hora ya no está disponible. Elige otra.';
+            statusEl.textContent = t('booking.slotTaken');
             await onDateChange();
             return;
         }
@@ -286,7 +287,7 @@ export function initBooking() {
         const horaFin = minutesToTime(h * 60 + m + SLOT_MINUTES);
 
         submitBtn.disabled = true;
-        statusEl.textContent = 'Confirmando...';
+        statusEl.textContent = t('booking.confirming');
 
         let error;
         try {
@@ -309,10 +310,10 @@ export function initBooking() {
 
         if (error) {
             if (error.code === '23505') {
-                statusEl.textContent = 'Uy, alguien acaba de reservar esa hora. Elige otra.';
+                statusEl.textContent = t('booking.raceCondition');
                 await onDateChange();
             } else {
-                statusEl.textContent = 'No se pudo confirmar la cita. Inténtalo de nuevo.';
+                statusEl.textContent = t('booking.genericError');
             }
             return;
         }

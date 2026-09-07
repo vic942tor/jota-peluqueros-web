@@ -122,6 +122,32 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
 }
 .site-nav a:hover { color: var(--color-brand-accent); }
 .site-nav a[aria-current="page"], .footer-nav a[aria-current="page"] { color: var(--color-brand-accent); }
+.lang-switch {
+    display: flex;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 3px;
+}
+.lang-switch button {
+    background: none;
+    border: none;
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 5px 9px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s var(--ease-fine), color 0.2s var(--ease-fine);
+}
+.lang-switch button:hover { color: var(--color-text); }
+.lang-switch button.is-active {
+    background: var(--color-brand-accent);
+    color: var(--color-brand-dark);
+}
+
 .nav-cta {
     background: var(--color-accent);
     color: #fff !important;

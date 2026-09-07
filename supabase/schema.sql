@@ -84,10 +84,22 @@ create table appointments (
 -- ============================================================
 -- 4. STOCK / PRODUCTOS
 -- ============================================================
+-- El dueño escribe nombre/descripción una sola vez, en español (columnas
+-- "_en"/"_de"/"_it" nulas hasta ese momento). El Panel Jota, al guardar,
+-- llama a una API de traducción (DeepL o Google Cloud Translation, ambas
+-- con nivel gratuito de sobra para este volumen) y rellena esas columnas
+-- automáticamente — así la web no traduce nada al vuelo por cada visita.
 create table products (
     id uuid primary key default gen_random_uuid(),
     business_id uuid not null references businesses(id) on delete cascade,
     nombre text not null,
+    nombre_en text,
+    nombre_de text,
+    nombre_it text,
+    descripcion text,
+    descripcion_en text,
+    descripcion_de text,
+    descripcion_it text,
     categoria text,
     precio_venta numeric(10,2),
     stock_actual integer not null default 0,
@@ -102,7 +114,13 @@ create table posts (
     id uuid primary key default gen_random_uuid(),
     business_id uuid not null references businesses(id) on delete cascade,
     titulo text not null,
+    titulo_en text,
+    titulo_de text,
+    titulo_it text,
     cuerpo text,
+    cuerpo_en text,
+    cuerpo_de text,
+    cuerpo_it text,
     publicado_en timestamptz,
     created_at timestamptz not null default now()
 );

@@ -132,3 +132,18 @@ Esto no bloquea empezar a construir — se puede avanzar en paralelo y hacer la 
 ## 8. Qué NO cambia del sitio actual
 
 `index.html`, `productos.html`, partials, `css/style.css` y los módulos en `js/` siguen siendo la base del sitio público — no se reescribe desde cero. Se les añade un módulo de reservas propio (sección 6, fase 3) que sustituirá al `<script>` de Cal.com. El resto del sitio (diseño, textos, estructura) no se toca por este cambio de arquitectura.
+
+---
+
+## 9. Idiomas (i18n)
+
+El sitio tiene dos tipos de contenido, y cada uno se traduce de una forma distinta:
+
+- **Texto fijo de la interfaz** (menú, botones, títulos de sección, el propio modal de reservas): vive en diccionarios estáticos `i18n/es.json`, `en.json`, `de.json`, `it.json`, aplicados por `js/i18n.js` mediante atributos `data-i18n` en el HTML. Esto ya está construido y funcionando — español por defecto, con selector ES/EN/DE/IT en el header (recuerda la elección en `localStorage`).
+- **Contenido que escribe el dueño** (productos y noticias — lo único que no es texto fijo del diseño): se traduce automáticamente una sola vez, en el momento en que él lo guarda desde el Panel Jota, llamando a una API de traducción (DeepL o Google Cloud Translation — ambas con nivel gratuito de sobra para el volumen de un negocio así, ver cálculo más abajo). El resultado se guarda ya traducido en columnas `_en`/`_de`/`_it` de las tablas `products` y `posts` (ver `supabase/migration_2_i18n_content.sql`), así la web pública nunca traduce nada al vuelo por cada visita — solo lee lo que ya está guardado.
+
+**Por qué en el momento de guardar y no al mostrar la página:** traducir cada vez que alguien visita la web sería más lento (una llamada a una API externa por cada carga) y multiplicaría el gasto por cada visita repetida al mismo producto. Traduciendo una vez al guardar, el coste es prácticamente cero y la web sigue siendo tan rápida como ahora.
+
+**Cálculo de consumo (para no preocuparse por el límite gratis):** un producto con una descripción de 4 líneas (~280 caracteres) traducido a 3 idiomas consume ~800-900 caracteres — con el límite gratis de ambas APIs (500.000 caracteres/mes) caben más de 500 productos nuevos en el mismo mes. Una noticia con un párrafo (~500 caracteres) consume ~1.500 caracteres traducida a los 3 idiomas. Con el volumen real de la peluquería (unos pocos productos fijos, alguna noticia puntual), esto se queda en un pequeño porcentaje del límite gratis, de forma permanente.
+
+Pendiente para cuando se construya esa parte del Panel Jota: decidir DeepL vs Google Cloud Translation (DeepL da mejor calidad en estos 4 idiomas europeos) y dónde vive la llamada a la API (tiene que ser en un sitio con backend, porque la clave de la API es secreta — no puede ir en el navegador).

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /aviso-legal.html
 Disallow: /privacidad.html
 
-Sitemap: https://jotapeluqueros.com/sitemap.xml
+Sitemap: https://jota-peluqueros-web.vercel.app/sitemap.xml

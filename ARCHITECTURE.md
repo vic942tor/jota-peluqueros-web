@@ -135,7 +135,7 @@ Decisiones ya tomadas (no hace falta volver a preguntarlas):
 - **Catálogo de productos: sin venta online**, solo informativo. Lo carga el desarrollador y luego el propio dueño desde el Panel Jota, a mano, según va habiendo productos nuevos.
 - **Reasignación de citas de emergencia entre peluqueros**: el propio dueño la configura desde el Panel Jota cuando lo use — no es una pregunta a hacer ahora, es un ajuste operativo suyo del día a día.
 - **Notificaciones por WhatsApp/SMS para clientes**: sí, se activará más adelante (aplazado solo por el coste del plan de pago necesario, no por falta de interés).
-- **Analítica de visitas a la web**: sí le interesa — pendiente elegir herramienta (Plausible/Umami) y que él cree la cuenta.
+- **Analítica de visitas a la web**: hecho — **Cloudflare Web Analytics** (gratis siempre, sin cookies, sin banner de consentimiento necesario), script instalado en todas las páginas del sitio. En el Panel Jota, en vez de que el dueño tenga que entrar a la web de Cloudflare aparte, el dashboard puede traer esos mismos datos (visitas, países, páginas más vistas) mediante la **GraphQL Analytics API de Cloudflare** (necesita un token — la llamada se hace desde el backend del Panel Jota, no desde el navegador, igual que con las traducciones) y mostrarlos integrados junto a las citas y los beneficios.
 - **Cálculo de beneficios semanales**: pendiente de detallar la fórmula exacta con el desarrollador (quien ya tiene claro el criterio del dueño), no requiere pregunta adicional en la reunión.
 
 ---

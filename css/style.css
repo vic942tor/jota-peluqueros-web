@@ -460,17 +460,12 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
     background: var(--color-card);
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    padding: 24px 26px;
+    padding: 24px;
+    display: flex;
+    gap: 26px;
+    align-items: flex-start;
 }
-.post-date { display: block; color: var(--color-muted); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; margin-bottom: 6px; }
-.post-title { margin: 0 0 10px; font-size: 1.2rem; }
-.post-body { color: var(--color-text); margin: 0; white-space: pre-wrap; }
-.post-media-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 220px));
-    gap: 12px;
-    margin-top: 16px;
-}
+.post-media-col { flex: 0 0 300px; }
 .post-media-item {
     width: 100%;
     aspect-ratio: 4 / 3;
@@ -478,6 +473,22 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
     border-radius: var(--radius-sm, 10px);
     display: block;
     background: #000;
+}
+.post-media-extra {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+}
+.post-media-extra .post-media-item { aspect-ratio: 1 / 1; }
+.post-content { flex: 1; min-width: 0; }
+.post-date { display: block; color: var(--color-muted); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; margin-bottom: 6px; }
+.post-title { margin: 0 0 10px; font-size: 1.2rem; }
+.post-body { color: var(--color-text); margin: 0; white-space: pre-wrap; }
+
+@media (max-width: 640px) {
+    .post-card { flex-direction: column; }
+    .post-media-col { flex: none; width: 100%; }
 }
 .product-card-info { padding: 16px 18px; }
 .product-card-info h4 { font-size: 0.98rem; font-weight: 600; margin: 0 0 4px; }

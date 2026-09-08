@@ -24,6 +24,29 @@ function postCard(p) {
     const card = document.createElement('article');
     card.className = 'post-card';
 
+    const media = (p.post_media || []).slice().sort((a, b) => a.orden - b.orden);
+
+    if (media.length > 0) {
+        const mediaCol = document.createElement('div');
+        mediaCol.className = 'post-media-col';
+
+        const main = mediaElement(media[0]);
+        main.classList.add('post-media-main');
+        mediaCol.appendChild(main);
+
+        if (media.length > 1) {
+            const extra = document.createElement('div');
+            extra.className = 'post-media-extra';
+            media.slice(1).forEach((m) => extra.appendChild(mediaElement(m)));
+            mediaCol.appendChild(extra);
+        }
+
+        card.appendChild(mediaCol);
+    }
+
+    const content = document.createElement('div');
+    content.className = 'post-content';
+
     const date = document.createElement('span');
     date.className = 'post-date';
     date.textContent = formatFecha(p.publicado_en);
@@ -36,15 +59,8 @@ function postCard(p) {
     body.className = 'post-body';
     body.textContent = p.cuerpo || '';
 
-    card.append(date, title, body);
-
-    const media = (p.post_media || []).slice().sort((a, b) => a.orden - b.orden);
-    if (media.length > 0) {
-        const grid = document.createElement('div');
-        grid.className = 'post-media-grid';
-        media.forEach((m) => grid.appendChild(mediaElement(m)));
-        card.appendChild(grid);
-    }
+    content.append(date, title, body);
+    card.appendChild(content);
 
     return card;
 }

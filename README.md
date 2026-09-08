@@ -39,7 +39,7 @@ Multi-tenant desde el modelo de datos (`business_id` en cada tabla): aunque hoy 
 
 ## Base de datos (Supabase / Postgres)
 
-Esquema completo en [`supabase/schema.sql`](supabase/schema.sql), con seguridad a nivel de fila (RLS) definida junto a cada tabla:
+Esquema completo en `supabase/sql/schema.sql`, dentro del repo privado `jota-peluqueros-app` (no aquí — este repo es público), con seguridad a nivel de fila (RLS) definida junto a cada tabla:
 
 | Tabla | Contenido |
 |---|---|
@@ -54,7 +54,7 @@ Esquema completo en [`supabase/schema.sql`](supabase/schema.sql), con seguridad 
 
 **Reglas de acceso (RLS):** cualquier visitante puede leer horarios/peluqueros/servicios y crear una reserva, pero no puede ver ni editar citas ajenas (ni el teléfono de otro cliente). Solo el administrador puede gestionar empleados, turnos, stock y contenido. Estas reglas se aplican en la propia base de datos, no en el código de la web — no dependen de que nadie manipule el navegador.
 
-Scripts auxiliares en `supabase/`: `grants.sql` (permisos base de los roles `anon`/`authenticated`) y `seed_test_data.sql` (turnos de ejemplo para pruebas).
+Scripts auxiliares (`grants.sql`, `seed_test_data.sql`, migraciones) también en el repo privado, en `supabase/sql/`.
 
 ---
 
@@ -81,10 +81,6 @@ Scripts auxiliares en `supabase/`: `grants.sql` (permisos base de los roles `ano
 ├── img/
 │   ├── logo.png         # Logo de marca, usado en header, hero y footer
 │   └── favicon-*.png
-├── supabase/
-│   ├── schema.sql          # Tablas, funciones y reglas de seguridad (RLS)
-│   ├── grants.sql          # Permisos base de los roles anon/authenticated
-│   └── seed_test_data.sql  # Datos de ejemplo para desarrollo
 ├── ARCHITECTURE.md       # Diseño completo del sistema (backend, roles, fases de construcción)
 └── .gitignore
 ```

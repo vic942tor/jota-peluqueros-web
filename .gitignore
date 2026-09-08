@@ -4,3 +4,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.log
+
+# El esquema de la base de datos y los scripts de Supabase viven en el
+# repo privado (jota-peluqueros-app) — este es público.
+/supabase/

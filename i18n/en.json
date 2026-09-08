@@ -7,6 +7,7 @@
     "nav.conocenos": "About us",
     "nav.servicios": "Services",
     "nav.productos": "Products",
+    "nav.noticias": "News",
     "nav.galeria": "Gallery",
     "nav.ubicacion": "Location",
     "nav.cta": "Book now",
@@ -81,6 +82,10 @@
     "productos.cardName": "Product coming soon",
     "productos.cardDesc": "Short product description.",
     "productos.contactLead": "Looking for something specific? Ask us at the salon —",
+
+    "noticias.eyebrow": "News",
+    "noticias.title": "What's new",
+    "noticias.lead": "The latest from Jota Peluqueros: openings, promotions and what's happening in La Centinela.",
 
     "booking.title": "Book your appointment",
     "booking.closeAria": "Close",

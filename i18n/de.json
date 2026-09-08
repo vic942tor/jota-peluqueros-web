@@ -7,6 +7,7 @@
     "nav.conocenos": "Über uns",
     "nav.servicios": "Leistungen",
     "nav.productos": "Produkte",
+    "nav.noticias": "Neuigkeiten",
     "nav.galeria": "Galerie",
     "nav.ubicacion": "Standort",
     "nav.cta": "Termin buchen",
@@ -81,6 +82,10 @@
     "productos.cardName": "Produkt folgt",
     "productos.cardDesc": "Kurze Produktbeschreibung.",
     "productos.contactLead": "Suchen Sie etwas Bestimmtes? Fragen Sie uns im Salon —",
+
+    "noticias.eyebrow": "Neuigkeiten",
+    "noticias.title": "Neues vom Salon",
+    "noticias.lead": "Das Neueste von Jota Peluqueros: Eröffnungen, Aktionen und was in La Centinela passiert.",
 
     "booking.title": "Termin buchen",
     "booking.closeAria": "Schließen",

@@ -5,6 +5,7 @@ import { initCarousel } from './carousel.js';
 import { initReveal } from './reveal.js';
 import { initBooking } from './booking.js';
 import { initProducts } from './products.js';
+import { initNoticias } from './noticias.js';
 
 (async () => {
     await loadPartials();
@@ -14,4 +15,5 @@ import { initProducts } from './products.js';
     initReveal();
     initBooking();
     initProducts();
+    initNoticias();
 })();

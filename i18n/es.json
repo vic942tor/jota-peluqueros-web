@@ -7,6 +7,7 @@
     "nav.conocenos": "Conócenos",
     "nav.servicios": "Servicios",
     "nav.productos": "Productos",
+    "nav.noticias": "Noticias",
     "nav.galeria": "Galería",
     "nav.ubicacion": "Ubicación",
     "nav.cta": "Pide tu cita",
@@ -81,6 +82,10 @@
     "productos.cardName": "Producto próximamente",
     "productos.cardDesc": "Descripción breve del producto.",
     "productos.contactLead": "¿Buscas algo en concreto? Pregúntanos en el local —",
+
+    "noticias.eyebrow": "Noticias",
+    "noticias.title": "Novedades del local",
+    "noticias.lead": "Lo último de Jota Peluqueros: aperturas, promociones y lo que se cuece en La Centinela.",
 
     "booking.title": "Pide tu cita",
     "booking.closeAria": "Cerrar",

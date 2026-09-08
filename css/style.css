@@ -612,7 +612,13 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
     width: auto;
 }
 .footer-brand p { margin: 0; color: var(--color-muted-inverse); font-size: 0.85rem; }
-.footer-nav, .footer-contact {
+.footer-nav {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    column-gap: 24px;
+    row-gap: 10px;
+}
+.footer-contact {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -821,5 +827,6 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
     .value-item { font-size: 0.85rem; }
     .footer-inner { grid-template-columns: 1fr; gap: 28px; text-align: center; }
     .footer-brand { align-items: center; }
-    .footer-nav, .footer-contact { align-items: center; }
+    .footer-nav { justify-content: center; justify-items: center; }
+    .footer-contact { align-items: center; }
 }

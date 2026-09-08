@@ -7,10 +7,10 @@
     --color-muted: #5B6672;
     --color-border: #D8DEE3;
 
-    /* Acento — gris azulado, sustituye al rojo/dorado anterior */
-    --color-accent: #3E4C5E;
-    --color-accent-hover: #2E3946;
-    --color-brand-accent: #7B8A99;
+    /* Acento — rojo oscuro, tomado del logo nuevo */
+    --color-accent: #AB2A2E;
+    --color-accent-hover: #8F2226;
+    --color-brand-accent: #C0585C;
 
     /* Franjas oscuras (header, hero, footer) — para que el logo (texto
        blanco) se siga leyendo bien; el resto del sitio es claro. */
@@ -439,7 +439,8 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
 /* Productos */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 260px));
+    justify-content: start;
     gap: 20px;
 }
 .product-card {

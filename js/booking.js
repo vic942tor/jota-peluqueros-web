@@ -134,6 +134,52 @@ export function initBooking() {
     let selectedSlot = null;
     let selectedStaffId = ''; // '' = cualquiera disponible
     let businessId = null;
+    let realtimeChannel = null; // suscripción activa a cambios de citas del día elegido
+
+    function unsubscribeRealtime() {
+        if (realtimeChannel) {
+            supabase.removeChannel(realtimeChannel);
+            realtimeChannel = null;
+        }
+    }
+
+    // Escucha en directo altas/bajas de citas ese día, para que la
+    // disponibilidad se actualice sola si otra persona reserva mientras
+    // este cliente tiene el modal abierto — sin tener que recargar la página.
+    function subscribeRealtime(fecha) {
+        unsubscribeRealtime();
+        realtimeChannel = supabase
+            .channel(`booking-availability-${fecha}`)
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'appointments', filter: `fecha=eq.${fecha}` }, () => {
+                refreshAvailabilityLive();
+            })
+            .subscribe();
+    }
+
+    async function refreshAvailabilityLive() {
+        const fecha = dateInput.value;
+        if (!fecha || slotsField.hidden && !selectedSlot) return;
+        try {
+            currentAvailability = await getAvailability(fecha);
+        } catch {
+            return;
+        }
+
+        if (selectedSlot && !Object.values(currentAvailability).some((e) => e.slots.includes(selectedSlot))) {
+            // La hora que tenía elegida ya no está libre: avisa y vuelve a elegir hora.
+            statusEl.textContent = t('booking.raceCondition');
+            renderSlots();
+            return;
+        }
+        if (selectedSlot && selectedStaffId && !staffFreeAtSlot(selectedSlot).some((s) => s.id === selectedStaffId)) {
+            // Su peluquero concreto ya no está libre a esa hora: refresca la lista de peluqueros.
+            renderStaffOptions();
+            return;
+        }
+        if (!selectedSlot) {
+            renderSlots();
+        }
+    }
 
     async function getBusinessId() {
         if (businessId) return businessId;
@@ -160,6 +206,7 @@ export function initBooking() {
         currentAvailability = {};
         selectedSlot = null;
         selectedStaffId = '';
+        unsubscribeRealtime();
     }
 
     function openModal() {
@@ -171,6 +218,7 @@ export function initBooking() {
     function closeModal() {
         overlay.hidden = true;
         document.body.style.overflow = '';
+        unsubscribeRealtime();
     }
 
     // Peluqueros libres justo en la hora elegida (esto es lo que se muestra
@@ -274,6 +322,7 @@ export function initBooking() {
         }
 
         renderSlots();
+        subscribeRealtime(fecha);
     }
 
     async function onSubmit(e) {
@@ -321,8 +370,8 @@ export function initBooking() {
             staffId = libres[Math.floor(Math.random() * libres.length)]?.id;
         }
         if (!staffId) {
-            statusEl.textContent = t('booking.slotTaken');
             await onDateChange();
+            statusEl.textContent = t('booking.slotTaken');
             return;
         }
 
@@ -355,8 +404,11 @@ export function initBooking() {
 
         if (error) {
             if (error.code === '23505') {
-                statusEl.textContent = t('booking.raceCondition');
+                // onDateChange() refresca los huecos y al hacerlo limpia el
+                // mensaje de estado — por eso el aviso se pone DESPUÉS,
+                // para que no desaparezca nada más mostrarse.
                 await onDateChange();
+                statusEl.textContent = t('booking.raceCondition');
             } else {
                 statusEl.textContent = t('booking.genericError');
             }

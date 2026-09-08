@@ -119,7 +119,6 @@ export function initBooking() {
     const contactFields = document.getElementById('bookingContactFields');
     const submitBtn = document.getElementById('bookingSubmit');
     const successEl = document.getElementById('bookingSuccess');
-    const newOneBtn = document.getElementById('bookingNewOne');
     const phoneInput = document.getElementById('bookingPhone');
 
     // Campo de teléfono con banderas reales y detección de prefijo (intl-tel-input,
@@ -311,10 +310,15 @@ export function initBooking() {
         }
         submitBtn.disabled = false;
 
-        // "Cualquiera": elegimos el primer peluquero libre en esa hora.
+        // "Cualquiera": se reparte al azar entre los libres en esa hora (no
+        // siempre el mismo primero de la lista), y guardamos que el cliente
+        // no pidió a nadie en concreto — así en el panel se sabe que
+        // cualquier otro peluquero puede coger la cita.
+        const eleccionPeluquero = selectedStaffId ? 'especifico' : 'cualquiera';
         let staffId = selectedStaffId;
         if (!staffId) {
-            staffId = staffFreeAtSlot(selectedSlot)[0]?.id;
+            const libres = staffFreeAtSlot(selectedSlot);
+            staffId = libres[Math.floor(Math.random() * libres.length)]?.id;
         }
         if (!staffId) {
             statusEl.textContent = t('booking.slotTaken');
@@ -341,6 +345,7 @@ export function initBooking() {
                 cliente_nombre: nombre,
                 cliente_telefono: telefono,
                 creado_por: 'cliente_web',
+                eleccion_peluquero: eleccionPeluquero,
             }));
         } catch (err) {
             error = err;
@@ -380,5 +385,4 @@ export function initBooking() {
 
     dateInput.addEventListener('change', onDateChange);
     form.addEventListener('submit', onSubmit);
-    newOneBtn.addEventListener('click', resetForm);
 }

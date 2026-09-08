@@ -96,7 +96,7 @@
     "booking.phoneLabel": "Phone",
     "booking.submit": "Confirm appointment",
     "booking.successText": "Appointment confirmed! See you soon.",
-    "booking.newOne": "Book another appointment",
+    "booking.successNote": "You'll receive a confirmation message shortly.",
     "booking.anyStaff": "Any",
     "booking.loadingSlots": "Looking for free slots...",
     "booking.noAvailability": "No availability that day. Try another date.",

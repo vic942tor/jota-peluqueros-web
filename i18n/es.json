@@ -96,7 +96,7 @@
     "booking.phoneLabel": "Teléfono",
     "booking.submit": "Confirmar cita",
     "booking.successText": "¡Cita confirmada! Te esperamos.",
-    "booking.newOne": "Pedir otra cita",
+    "booking.successNote": "En breve recibirás un mensaje de confirmación de la cita.",
     "booking.anyStaff": "Cualquiera",
     "booking.loadingSlots": "Buscando horas libres...",
     "booking.noAvailability": "No hay disponibilidad ese día. Prueba otra fecha.",

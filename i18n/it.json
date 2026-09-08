@@ -96,7 +96,7 @@
     "booking.phoneLabel": "Telefono",
     "booking.submit": "Conferma appuntamento",
     "booking.successText": "Appuntamento confermato! Ti aspettiamo.",
-    "booking.newOne": "Prenota un altro appuntamento",
+    "booking.successNote": "Riceverai a breve un messaggio di conferma dell'appuntamento.",
     "booking.anyStaff": "Chiunque",
     "booking.loadingSlots": "Ricerca orari disponibili...",
     "booking.noAvailability": "Nessuna disponibilità in questo giorno. Prova un'altra data.",

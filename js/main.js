@@ -5,6 +5,7 @@ import { initCarousel } from './carousel.js';
 import { initReveal } from './reveal.js';
 import { initBooking } from './booking.js';
 import { initProducts } from './products.js';
+import { initServices } from './services.js';
 import { initNoticias } from './noticias.js';
 
 (async () => {
@@ -15,5 +16,6 @@ import { initNoticias } from './noticias.js';
     initReveal();
     initBooking();
     initProducts();
+    initServices();
     initNoticias();
 })();

@@ -3,7 +3,7 @@ import { supabase } from './supabaseClient.js';
 // Mismo espíritu que products.js: un orden preferente para las categorías
 // habituales, y cualquier categoría nueva que se añada en Panel Jota se
 // pinta igualmente, al final, sin necesidad de tocar este archivo.
-const CATEGORIA_ORDEN = ['Corte', 'Barba', 'Afeitado', 'Color', 'Otros'];
+const CATEGORIA_ORDEN = ['Corte', 'Afeitado', 'Color', 'Otros'];
 
 function formatPrecio(precio) {
     return precio == null ? 'Consultar' : `${Number(precio).toFixed(2)} €`;

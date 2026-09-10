@@ -368,7 +368,8 @@ h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01
 }
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 300px));
+    justify-content: start;
     gap: 16px;
 }
 .service-card {
